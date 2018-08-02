@@ -1,0 +1,26 @@
+asdfasdf
+
+[TAG]BSC_76109_1_CHENBO
+M 2016-08-03 03:00 +0000 chenbo1 1.408 ProgramSrcList.ini Develop/SourceCode/BSC/NG_CCS/src/daemon == <remote>
+A 2016-08-03 03:25 +0000 chenbo1 1.1   DA_BM_IbEarlyWarningOperSync.ini Develop/Script/SHELL/x86-crm-da02/bossbm2/bossapp2/cfg   == <remote>
+A 2016-08-03 03:25 +0000 chenbo1 1.1   DA_BM_IbEarlyWarningOperSync.ini Develop/Script/SHELL/x86-crm-da02/bossbm2/bossapp2/cfg   == <remote>
+A 2016-08-03 03:25 +0000 chenbo1 1.1   DA_BM_IbEarlyWarningOperSync.ini Develop/Script/SHELL/x86-crm-da02/bossbm2/bossapp2/cfg   == <remote>
+
+
+
+
+[TAG]UCIP_76109_1_CHENBO
+M 2016-08-04 06:49 +0000 chenbo1 1.13 CustomerTouchSyncPerson.pc Develop/SourceCode/UCIP/src/daemon/NormalDaemon == <remote>
+A 2016-08-03 03:25 +0000 chenbo1 1.1   DA_BM_IbEarlyWarningOperSync.ini Develop/Script/SHELL/x86-crm-da02/bossbm2/bossapp2/cfg   == <remote>
+A 2016-08-03 03:25 +0000 chenbo1 1.1   DA_BM_IbEarlyWarningOperSync.ini Develop/Script/SHELL/x86-crm-da02/bossbm2/bossapp2/cfg   == <remote>
+A 2016-08-03 03:25 +0000 chenbo1 1.1   DA_BM_IbEarlyWarningOperSync.ini Develop/Script/SHELL/x86-crm-da02/bossbm2/bossapp2/cfg   == <remote>
+
+
+[TAG]SHELL_76109_1_CHENBO
+M 2016-08-03 03:21 +0000 chenbo1 1.28  BM_daemonstart2    Develop/Script/SHELL/x86-crm-da02/bossbm2/bossapp2/tools == <remote>
+A 2016-08-03 03:25 +0000 chenbo1 1.1   DA_BM_IbEarlyWarningOperSync.ini Develop/Script/SHELL/x86-crm-da02/bossbm2/bossapp2/cfg   == <remote>
+
+M 2016-10-21 01:47 +0000 panqiaofeng 1.171 BroadBandUserMgt.h Develop/SourceCode/BSC/NG_CCS/inc/sc ==
+M 2016-10-21 01:49 +0000 panqiaofeng 1.27 IBroadbandUsersMgr_SQL.pc Develop/SourceCode/BSC/NG_CCS/src/bc/User ==
+M 2016-10-21 01:48 +0000 panqiaofeng 1.471 BroadBandUserMgt.cpp Develop/SourceCode/BSC/NG_CCS/src/sc/Base ==
+
