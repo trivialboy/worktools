@@ -67,6 +67,7 @@ type
     UpDown1: TUpDown;
     bbtnSetHeader: TSpeedButton;
     sbtnRespHtml: TSpeedButton;
+    cbox_raw: TCheckBox;
     procedure BitBtn31Click(Sender: TObject);
     procedure SpeedButton3Click(Sender: TObject);
     procedure sbtnReqXmlClick(Sender: TObject);
@@ -173,6 +174,12 @@ var
   i : integer;
   ts : tstringlist ;
 begin
+  if cbox_raw.Checked then
+  begin
+    result := m_req.Text;
+    exit;
+  end;
+
   ts := tstringlist.create();
  // ts.Add( m_req.Text);
   //for i:=0 to m_req.Lines.Count-1 do
@@ -641,7 +648,7 @@ begin
       myIniFile.WriteString('HTTP_SENDER','TIME_OUT',str);
       str := StringReplace(trim(FormHeader.Memo1.Text) ,#13#10,'\r\n',[rfReplaceAll]);
       myIniFile.WriteString('HTTP_SENDER','REQUEST_HEADER',str);
-
+      myIniFile.WriteBool('HTTP_SENDER','SEND_RAW_DATA',cbox_raw.Checked );
       myIniFile.Free;
 
 end;
@@ -658,6 +665,7 @@ begin
       cbContentType.Text := myIniFile.ReadString('HTTP_SENDER','CONTENT_TYPE','application/x-www-form-urlencoded');
       str := trim(myIniFile.ReadString('HTTP_SENDER','REQUEST_HEADER',''));
       FormHeader.Memo1.Text := StringReplace(str,'\r\n',#13#10,[rfReplaceAll]);
+      cbox_raw.Checked := myIniFile.ReadBool('HTTP_SENDER','SEND_RAW_DATA',false);
       myIniFile.Free;
 end;
 

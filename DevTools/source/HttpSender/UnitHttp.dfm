@@ -1,8 +1,8 @@
 object FormHttpSender: TFormHttpSender
-  Left = 299
-  Top = 198
-  Width = 1107
-  Height = 638
+  Left = 188
+  Top = 125
+  Width = 1199
+  Height = 689
   Caption = 'FormHttpSender'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -24,14 +24,14 @@ object FormHttpSender: TFormHttpSender
   object Splitter1: TSplitter
     Left = 529
     Top = 73
-    Height = 531
+    Height = 582
     ResizeStyle = rsUpdate
     OnMoved = Splitter1Moved
   end
   object Panel9: TPanel
     Left = 0
     Top = 0
-    Width = 1097
+    Width = 1189
     Height = 73
     Align = alTop
     BevelInner = bvRaised
@@ -41,7 +41,7 @@ object FormHttpSender: TFormHttpSender
     object Panel1: TPanel
       Left = 2
       Top = 2
-      Width = 910
+      Width = 1002
       Height = 69
       Align = alClient
       BevelOuter = bvNone
@@ -186,7 +186,7 @@ object FormHttpSender: TFormHttpSender
       end
     end
     object Panel3: TPanel
-      Left = 912
+      Left = 1004
       Top = 2
       Width = 183
       Height = 69
@@ -238,7 +238,7 @@ object FormHttpSender: TFormHttpSender
     Left = 0
     Top = 73
     Width = 529
-    Height = 531
+    Height = 582
     Align = alLeft
     TabOrder = 1
     object Panel12: TPanel
@@ -297,7 +297,7 @@ object FormHttpSender: TFormHttpSender
       object lbBizName: TLabel
         Left = 224
         Top = 36
-        Width = 56
+        Width = 81
         Height = 16
         Caption = '['#21152#36733#19994#21153']'
         Font.Charset = DEFAULT_CHARSET
@@ -316,21 +316,35 @@ object FormHttpSender: TFormHttpSender
         Caption = 'setHeader'
         OnClick = bbtnSetHeaderClick
       end
-      object cb_urlencode: TCheckBox
-        Left = 220
+      object cbox_raw: TCheckBox
+        Left = 270
         Top = 8
-        Width = 119
+        Width = 169
+        Height = 17
+        Hint = #19981#21024#38500#27599#34892#30340#31354#26684#19982#25511#21046#31526
+        Caption = #20445#30041#21407#26684#24335
+        ParentShowHint = False
+        ShowHint = True
+        TabOrder = 5
+      end
+      object cb_urlencode: TCheckBox
+        Left = 172
+        Top = 4
+        Width = 93
         Height = 21
-        Caption = 'URL Encoded'
+        Hint = 'URL Encode'
+        Caption = 'URL'#32534#30721
+        ParentShowHint = False
+        ShowHint = True
         TabOrder = 0
         OnClick = cb_urlencodeClick
       end
       object cbUTF8encode: TCheckBox
-        Left = 100
-        Top = 8
-        Width = 109
+        Left = 76
+        Top = 4
+        Width = 93
         Height = 21
-        Caption = 'UTF-8 '#21457#36865
+        Caption = 'UTF-8'#21457#36865
         TabOrder = 1
       end
       object cbContentType: TComboBox
@@ -372,7 +386,7 @@ object FormHttpSender: TFormHttpSender
       Left = 1
       Top = 60
       Width = 527
-      Height = 470
+      Height = 521
       Align = alClient
       Caption = 'pnl_req_text'
       TabOrder = 1
@@ -380,7 +394,7 @@ object FormHttpSender: TFormHttpSender
         Left = 1
         Top = 1
         Width = 525
-        Height = 468
+        Height = 519
         Align = alClient
         Font.Charset = GB2312_CHARSET
         Font.Color = clWindowText
@@ -397,7 +411,7 @@ object FormHttpSender: TFormHttpSender
         Left = 1
         Top = 1
         Width = 525
-        Height = 468
+        Height = 519
         Align = alClient
         Font.Charset = GB2312_CHARSET
         Font.Color = clWindowText
@@ -437,24 +451,24 @@ object FormHttpSender: TFormHttpSender
   object pnl_resp: TPanel
     Left = 532
     Top = 73
-    Width = 565
-    Height = 531
+    Width = 657
+    Height = 582
     Align = alClient
     Caption = 'pnl_resp'
     TabOrder = 2
     object Panel13: TPanel
       Left = 1
       Top = 1
-      Width = 563
+      Width = 655
       Height = 59
       Align = alTop
       BevelOuter = bvNone
       TabOrder = 0
       DesignSize = (
-        563
+        655
         59)
       object sbtnRespXml: TSpeedButton
-        Left = 392
+        Left = 484
         Top = 30
         Width = 41
         Height = 27
@@ -466,7 +480,7 @@ object FormHttpSender: TFormHttpSender
         OnClick = sbtnRespXmlClick
       end
       object SpeedButton2: TSpeedButton
-        Left = 341
+        Left = 433
         Top = 30
         Width = 51
         Height = 27
@@ -476,7 +490,7 @@ object FormHttpSender: TFormHttpSender
         OnClick = SpeedButton2Click
       end
       object SpeedButton4: TSpeedButton
-        Left = 433
+        Left = 525
         Top = 30
         Width = 63
         Height = 27
@@ -502,7 +516,7 @@ object FormHttpSender: TFormHttpSender
         OnClick = SpeedButton6Click
       end
       object SpeedButton8: TSpeedButton
-        Left = 496
+        Left = 588
         Top = 30
         Width = 61
         Height = 27
@@ -512,7 +526,7 @@ object FormHttpSender: TFormHttpSender
         OnClick = SpeedButton8Click
       end
       object sbtnRespHtml: TSpeedButton
-        Left = 296
+        Left = 388
         Top = 30
         Width = 45
         Height = 27
@@ -524,7 +538,7 @@ object FormHttpSender: TFormHttpSender
         OnClick = sbtnRespHtmlClick
       end
       object cbMarkResp: TCheckBox
-        Left = 381
+        Left = 473
         Top = 5
         Width = 105
         Height = 21
@@ -535,8 +549,8 @@ object FormHttpSender: TFormHttpSender
         TabOrder = 0
       end
       object cbUtf8Decode: TCheckBox
-        Left = 271
-        Top = 6
+        Left = 363
+        Top = 5
         Width = 105
         Height = 21
         Anchors = [akTop, akRight]
@@ -578,16 +592,16 @@ object FormHttpSender: TFormHttpSender
     object pnl_resp_text: TPanel
       Left = 1
       Top = 60
-      Width = 563
-      Height = 470
+      Width = 655
+      Height = 521
       Align = alClient
       Caption = 'pnl_resp_text'
       TabOrder = 2
       object m_resp1: TMemo
         Left = 1
         Top = 1
-        Width = 561
-        Height = 468
+        Width = 653
+        Height = 519
         Align = alClient
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -603,8 +617,8 @@ object FormHttpSender: TFormHttpSender
       object m_resp: TRichEdit
         Left = 1
         Top = 1
-        Width = 561
-        Height = 468
+        Width = 653
+        Height = 519
         Align = alClient
         Font.Charset = GB2312_CHARSET
         Font.Color = clWindowText
