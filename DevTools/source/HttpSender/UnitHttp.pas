@@ -118,7 +118,6 @@ type
     procedure saveIniFile();
     function getRequestContent() : string;
     //procedure doMark(cbMark : TCheckBox; richedt : TRichEdit);
-//    procedure doHttpExcept(http: TIdHTTP; e:Exception;var rspCode : integer  ; var rspContent : string);
   public
     { Public declarations }
     function CreateForm(caption : string):TForm;
