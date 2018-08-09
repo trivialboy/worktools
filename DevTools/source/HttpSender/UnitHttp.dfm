@@ -297,7 +297,7 @@ object FormHttpSender: TFormHttpSender
       object lbBizName: TLabel
         Left = 224
         Top = 36
-        Width = 81
+        Width = 56
         Height = 16
         Caption = '['#21152#36733#19994#21153']'
         Font.Charset = DEFAULT_CHARSET
@@ -318,9 +318,9 @@ object FormHttpSender: TFormHttpSender
       end
       object cbox_raw: TCheckBox
         Left = 270
-        Top = 8
+        Top = 4
         Width = 169
-        Height = 17
+        Height = 21
         Hint = #19981#21024#38500#27599#34892#30340#31354#26684#19982#25511#21046#31526
         Caption = #20445#30041#21407#26684#24335
         ParentShowHint = False
