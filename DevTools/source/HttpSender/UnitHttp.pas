@@ -114,7 +114,6 @@ type
     procedure showInRichEdit(instr : string; richedt : TRichEdit );
     procedure xmlClick(Sender: TObject; pnl_xml,pnl_text : TPanel;web :TWebBrowser; edt : TRichEdit );
     procedure htmlClick(Sender: TObject; pnl_xml,pnl_text : TPanel;web :TWebBrowser; edt : TRichEdit );
-//    procedure doEncode();
     procedure loadIniFile();
     procedure saveIniFile();
     function getRequestContent() : string;
