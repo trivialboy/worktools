@@ -7,55 +7,55 @@ object FormBsspExporter: TFormBsspExporter
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -10
+  Font.Height = -13
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
   OnClose = FormClose
   OnShow = FormShow
-  PixelsPerInch = 96
-  TextHeight = 13
+  PixelsPerInch = 120
+  TextHeight = 16
   object GroupBox2: TGroupBox
     Left = 0
     Top = 0
-    Width = 930
-    Height = 53
+    Width = 928
+    Height = 65
     Align = alTop
     Caption = 'DATA BASE'
     TabOrder = 0
     object StaticText1: TStaticText
-      Left = 26
-      Top = 20
-      Width = 57
-      Height = 17
+      Left = 32
+      Top = 25
+      Width = 68
+      Height = 20
       Caption = 'IP:Port:SID'
       TabOrder = 0
     end
     object btnDbConn: TButton
-      Left = 566
-      Top = 20
-      Width = 60
-      Height = 20
+      Left = 697
+      Top = 25
+      Width = 73
+      Height = 24
       Caption = 'Connect'
       TabOrder = 1
       OnClick = btnDbConnClick
     end
     object btnDbDisconn: TButton
-      Left = 637
-      Top = 20
-      Width = 61
-      Height = 20
+      Left = 784
+      Top = 25
+      Width = 75
+      Height = 24
       Caption = 'Disconnect'
       Enabled = False
       TabOrder = 2
       OnClick = btnDbDisconnClick
     end
     object cbDBTns: TComboBox
-      Left = 91
-      Top = 20
-      Width = 131
-      Height = 21
-      ItemHeight = 13
+      Left = 112
+      Top = 25
+      Width = 161
+      Height = 24
+      ItemHeight = 16
       ItemIndex = 0
       TabOrder = 3
       Text = '10.1.0.220:1521:kf'
@@ -64,36 +64,34 @@ object FormBsspExporter: TFormBsspExporter
         '10.46.6.181:2481:custom')
     end
     object ledDbUser: TLabeledEdit
-      Left = 273
-      Top = 20
-      Width = 98
+      Left = 336
+      Top = 25
+      Width = 121
       Height = 21
-      EditLabel.Width = 33
-      EditLabel.Height = 13
+      EditLabel.Width = 41
+      EditLabel.Height = 16
       EditLabel.Caption = 'USER:'
       LabelPosition = lpLeft
-      LabelSpacing = 3
       TabOrder = 4
       Text = 'bssp'
     end
     object ledDbPass: TLabeledEdit
-      Left = 455
-      Top = 20
-      Width = 98
+      Left = 560
+      Top = 25
+      Width = 121
       Height = 21
-      EditLabel.Width = 66
-      EditLabel.Height = 13
+      EditLabel.Width = 82
+      EditLabel.Height = 16
       EditLabel.Caption = 'PASSWORD:'
       LabelPosition = lpLeft
-      LabelSpacing = 3
       TabOrder = 5
       Text = 'bssp'
     end
   end
   object StatusBar1: TStatusBar
     Left = 0
-    Top = 642
-    Width = 930
+    Top = 635
+    Width = 928
     Height = 21
     Panels = <
       item
@@ -105,59 +103,57 @@ object FormBsspExporter: TFormBsspExporter
       item
         Width = 100
       end>
-    SimplePanel = False
   end
   object PageControl1: TPageControl
     Left = 0
-    Top = 53
-    Width = 930
-    Height = 589
+    Top = 65
+    Width = 928
+    Height = 570
     ActivePage = TabSheet1
     Align = alClient
-    TabIndex = 0
     TabOrder = 2
     object TabSheet1: TTabSheet
       Caption = 'BSSP'#37197#32622
       object GroupBox6: TGroupBox
         Left = 0
         Top = 0
-        Width = 922
-        Height = 53
+        Width = 920
+        Height = 65
         Align = alTop
         Caption = 'OUTPUT DIRECTORY'
         TabOrder = 0
         object SpeedButton1: TSpeedButton
-          Left = 592
-          Top = 20
-          Width = 18
-          Height = 17
+          Left = 729
+          Top = 25
+          Width = 22
+          Height = 21
           Caption = '...'
           OnClick = SpeedButton1Click
         end
         object edExportDir: TEdit
-          Left = 13
-          Top = 20
-          Width = 573
+          Left = 16
+          Top = 25
+          Width = 705
           Height = 21
           Enabled = False
           TabOrder = 0
           Text = 'd:\'
         end
         object btnGetAll: TButton
-          Left = 618
-          Top = 20
-          Width = 39
-          Height = 20
+          Left = 761
+          Top = 25
+          Width = 48
+          Height = 24
           Caption = 'Get All'
           Enabled = False
           TabOrder = 1
           OnClick = btnGetAllClick
         end
         object btStop: TButton
-          Left = 663
-          Top = 20
-          Width = 40
-          Height = 20
+          Left = 816
+          Top = 25
+          Width = 49
+          Height = 24
           Caption = 'Stop'
           Enabled = False
           TabOrder = 2
@@ -166,95 +162,95 @@ object FormBsspExporter: TFormBsspExporter
       end
       object GroupBox1: TGroupBox
         Left = 0
-        Top = 251
-        Width = 922
-        Height = 104
+        Top = 157
+        Width = 920
+        Height = 128
         Align = alBottom
         Caption = 'BSSP_BUSINESS'
         Color = clBtnFace
         ParentColor = False
         TabOrder = 1
         DesignSize = (
-          922
-          104)
+          920
+          128)
         object mmBusiness: TMemo
-          Left = 13
-          Top = 39
-          Width = 722
-          Height = 53
+          Left = 16
+          Top = 48
+          Width = 889
+          Height = 65
           Anchors = [akLeft, akTop, akRight]
           Lines.Strings = (
-            '1=2')
+            'business_id = 0')
           TabOrder = 0
         end
         object btnGet1: TButton
-          Left = 111
-          Top = 13
-          Width = 60
-          Height = 20
+          Left = 137
+          Top = 16
+          Width = 73
+          Height = 25
           Caption = 'Get'
           Enabled = False
           TabOrder = 1
           OnClick = btnGet1Click
         end
         object StaticText5: TStaticText
-          Left = 13
-          Top = 20
-          Width = 90
-          Height = 17
+          Left = 16
+          Top = 25
+          Width = 111
+          Height = 20
           Caption = 'WHERE CLAUSE'
           TabOrder = 2
         end
       end
       object GroupBox3: TGroupBox
         Left = 0
-        Top = 355
-        Width = 922
-        Height = 98
+        Top = 285
+        Width = 920
+        Height = 121
         Align = alBottom
         Caption = 'BSSP_PROCESS'
         TabOrder = 2
         DesignSize = (
-          922
-          98)
+          920
+          121)
         object mmProcess: TMemo
-          Left = 13
-          Top = 39
-          Width = 722
-          Height = 46
+          Left = 16
+          Top = 48
+          Width = 889
+          Height = 57
           Anchors = [akLeft, akTop, akRight]
           Lines.Strings = (
-            '1=2')
+            'process_id = 0')
           TabOrder = 0
         end
         object StaticText4: TStaticText
-          Left = 13
-          Top = 20
-          Width = 90
-          Height = 17
+          Left = 16
+          Top = 25
+          Width = 111
+          Height = 20
           Caption = 'WHERE CLAUSE'
           TabOrder = 1
         end
         object btnGet2: TButton
-          Left = 111
-          Top = 13
-          Width = 60
-          Height = 20
+          Left = 137
+          Top = 16
+          Width = 73
+          Height = 25
           Caption = 'Get'
           Enabled = False
           TabOrder = 2
           OnClick = btnGet2Click
         end
         object cb_procTmpl: TCheckBox
-          Left = 189
-          Top = 20
-          Width = 130
-          Height = 13
+          Left = 233
+          Top = 25
+          Width = 160
+          Height = 16
           BiDiMode = bdLeftToRight
           Caption = #36807#31243#27169#26495#20351#29992#21333#29420#25991#20214
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -15
           Font.Name = 'MS Sans Serif'
           Font.Style = []
           ParentBiDiMode = False
@@ -265,38 +261,38 @@ object FormBsspExporter: TFormBsspExporter
       end
       object GroupBox5: TGroupBox
         Left = 0
-        Top = 453
-        Width = 922
-        Height = 108
+        Top = 406
+        Width = 920
+        Height = 133
         Align = alBottom
         Caption = 'BSSP_SERVICE && BSSP_PREFAB_SQL'
         TabOrder = 3
         DesignSize = (
-          922
-          108)
+          920
+          133)
         object mmService: TMemo
-          Left = 13
-          Top = 46
-          Width = 722
-          Height = 52
+          Left = 16
+          Top = 57
+          Width = 889
+          Height = 64
           Anchors = [akLeft, akTop, akRight]
           Lines.Strings = (
-            '1=2')
+            'service_id = 0')
           TabOrder = 0
         end
         object StaticText7: TStaticText
-          Left = 13
-          Top = 20
-          Width = 90
-          Height = 17
+          Left = 16
+          Top = 25
+          Width = 111
+          Height = 20
           Caption = 'WHERE CLAUSE'
           TabOrder = 1
         end
         object btnGet4: TButton
-          Left = 111
-          Top = 18
-          Width = 60
-          Height = 20
+          Left = 137
+          Top = 22
+          Width = 73
+          Height = 25
           Caption = 'Get'
           Enabled = False
           TabOrder = 2
@@ -305,21 +301,21 @@ object FormBsspExporter: TFormBsspExporter
       end
       object Panel1: TPanel
         Left = 0
-        Top = 53
-        Width = 922
-        Height = 198
+        Top = 65
+        Width = 920
+        Height = 92
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 4
         object Memo1: TMemo
-          Left = 157
+          Left = 193
           Top = 0
-          Width = 765
-          Height = 198
+          Width = 727
+          Height = 92
           Align = alClient
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -15
+          Font.Height = -18
           Font.Name = 'MS Sans Serif'
           Font.Style = []
           Lines.Strings = (
@@ -333,25 +329,25 @@ object FormBsspExporter: TFormBsspExporter
         object GroupBox7: TGroupBox
           Left = 0
           Top = 0
-          Width = 157
-          Height = 198
+          Width = 193
+          Height = 92
           Align = alLeft
           Caption = 'PREFIX'
           TabOrder = 1
           object edPreFix: TEdit
-            Left = 13
-            Top = 20
-            Width = 98
+            Left = 16
+            Top = 25
+            Width = 121
             Height = 21
             TabOrder = 0
             Text = 'bssp'
             OnChange = edPreFixChange
           end
           object cbPreFix: TCheckBox
-            Left = 13
-            Top = 52
-            Width = 209
-            Height = 14
+            Left = 16
+            Top = 64
+            Width = 257
+            Height = 17
             Hint = 'add prefix except BSSP_PROCESS_TEMPLATE'
             Caption = #21253#21547#27169#24335#21069#32512
             Checked = True
