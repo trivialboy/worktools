@@ -115,7 +115,7 @@ AutoIncBuild=1
 MajorVer=1
 MinorVer=8
 Release=8
-Build=1
+Build=0
 Debug=0
 PreRelease=0
 Special=0
@@ -126,7 +126,7 @@ CodePage=936
 [Version Info Keys]
 CompanyName=
 FileDescription=
-FileVersion=1.8.8.1
+FileVersion=1.8.8.0
 InternalName=
 LegalCopyright=
 LegalTrademarks=

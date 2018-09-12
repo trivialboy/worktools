@@ -1,6 +1,6 @@
 object FormHttpSender: TFormHttpSender
-  Left = 188
-  Top = 125
+  Left = 157
+  Top = 118
   Width = 1199
   Height = 689
   Caption = 'FormHttpSender'

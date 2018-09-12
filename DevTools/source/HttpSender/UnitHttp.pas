@@ -114,10 +114,12 @@ type
     procedure showInRichEdit(instr : string; richedt : TRichEdit );
     procedure xmlClick(Sender: TObject; pnl_xml,pnl_text : TPanel;web :TWebBrowser; edt : TRichEdit );
     procedure htmlClick(Sender: TObject; pnl_xml,pnl_text : TPanel;web :TWebBrowser; edt : TRichEdit );
+//    procedure doEncode();
     procedure loadIniFile();
     procedure saveIniFile();
     function getRequestContent() : string;
     //procedure doMark(cbMark : TCheckBox; richedt : TRichEdit);
+//    procedure doHttpExcept(http: TIdHTTP; e:Exception;var rspCode : integer  ; var rspContent : string);
   public
     { Public declarations }
     function CreateForm(caption : string):TForm;
@@ -912,6 +914,8 @@ begin
   ckbUseBiz.Checked := true;
   ckbUseBizClick(Sender);
   lbBizName.Caption := bizName;
+
+//  TFormDevToolsMain.TabControl1.Tabs.Strings[TFormDevToolsMain.TabControl1.TabIndex] := bizName;
 end;
 
 procedure TFormHttpSender.ckbUseBizClick(Sender: TObject);

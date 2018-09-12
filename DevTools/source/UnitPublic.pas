@@ -164,7 +164,7 @@ begin
     //去掉换行回车符
     inStr := stringReplace(inStr,#13#10,'',[rfReplaceAll, rfIgnoreCase]);
     //去掉tab符
-    inStr := stringReplace(inStr,#9,'',[rfReplaceAll, rfIgnoreCase]);
+    inStr := stringReplace(inStr,#9,' ',[rfReplaceAll, rfIgnoreCase]);
 
     outStr := '';
     indent := 0;

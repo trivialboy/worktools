@@ -1,6 +1,6 @@
 object FormBsspExporter: TFormBsspExporter
-  Left = 244
-  Top = 136
+  Left = 304
+  Top = 131
   Width = 938
   Height = 690
   Caption = 'Main v0.1'
