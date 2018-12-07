@@ -1830,6 +1830,7 @@ begin
         editbusinessid.SetFocus;
         exit;
     end;
+    editbizshowName.Text := '';
     //bssp_business
     AdoQuery1.SQL.Clear;
     AdoQuery1.SQL.Add('select a.*,to_char(a.inure_date,''yyyymmdd'') inure_dt, to_char(a.expire_date,''yyyymmdd'') expire_dt ');
@@ -1953,6 +1954,7 @@ begin
     v_serviceId := trim2(EditserviceId.text);
     v_serviceName := trim2(EditServiceName.Text);
 
+    editsevshowname.Text :='';
     //bssp_service
     AdoQuery1.Close;
     AdoQuery1.SQL.Clear;
@@ -1960,6 +1962,7 @@ begin
     if( v_serviceId <> '' ) then
     begin
         AdoQuery1.SQL.append(' from bssp_service a where service_id=' + v_serviceId );
+        EditServiceName.Text := '';
     end
     else
     begin
@@ -2391,12 +2394,14 @@ begin
     v_procId := trim2(EditProcessId.text);
     v_procCode := trim2(EditProcessCode.Text);
 
+    editProcshowname.TExt := '';
     //bssp_process
     AdoQuery1.SQL.Clear;
     AdoQuery1.SQL.Add('select *');
     if( v_procId <> '' )then
     begin
         AdoQuery1.sql.append(' from bssp_process where process_id=' + v_procId );
+        EditProcessCode.Text := '';
     end
     else
     begin
@@ -2491,9 +2496,15 @@ begin
     AdoQuery1.SQL.Clear;
     AdoQuery1.SQL.Add('select  SQL_ID, SQL_NAME, GROUP_ID, SUBSYSTEM_ID, SQL_TYPE, OUT_TEMPLATE, CREATE_DATE, MODIFY_DATE, DESCRIPTION, nvl(db_type,1) db_type');
     if( v_sqlId <> '' ) then
-        AdoQuery1.sql.append(' from bssp_prefab_sql where sql_id=' + v_sqlId )
+    begin
+        AdoQuery1.sql.append(' from bssp_prefab_sql where sql_id=' + v_sqlId );
+        editSqlName.Text := '';
+    end
     else
+    begin
         AdoQuery1.sql.Append(' from bssp_prefab_sql where sql_name=''' + v_sqlName+'''');
+        editSqlId.Text := '';
+    end;
     AdoQuery1.Open;
     if not AdoQuery1.Eof then
     begin

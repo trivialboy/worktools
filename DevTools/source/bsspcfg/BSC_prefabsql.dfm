@@ -15,8 +15,8 @@ object FormPrefabSql: TFormPrefabSql
   TextHeight = 16
   object Panel1: TPanel
     Left = 0
-    Top = 389
-    Width = 688
+    Top = 395
+    Width = 686
     Height = 51
     Align = alBottom
     TabOrder = 0
@@ -89,8 +89,8 @@ object FormPrefabSql: TFormPrefabSql
   object MemoSQL: TRichEdit
     Left = 0
     Top = 0
-    Width = 688
-    Height = 389
+    Width = 686
+    Height = 395
     Align = alClient
     Font.Charset = GB2312_CHARSET
     Font.Color = clWindowText

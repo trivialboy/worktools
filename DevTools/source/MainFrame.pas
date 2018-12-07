@@ -278,6 +278,11 @@ var
   beta : boolean;
   mv : string ;
 begin
+  if ( newVer='') then
+  begin
+    result := false;
+    exit;
+  end;
   //判断版本是不是比当前版本更新
   mv := StringReplace(mVersion,' ','.',[rfReplaceAll]);
   newv := split(newVer,'.');
@@ -309,11 +314,17 @@ var
 
     i ,j:integer;
     httpver : TIdHTTP;
+    testUrl : string;
 begin
     try
-//        url := 'http://10.1.0.195:8088/hdwiki/index.php?doc-view-513';
+
         httpver := TIdHttp.create(nil);
         buf := httpver.Get(m_sVersionUrl+ '-DevTools_'+stringReplace(StringReplace(mVersion,'.','_',[rfReplaceAll]),' ','_',[rfReplaceAll]));
+
+        //testUrl := 'http://10.1.0.195:8088/hdwiki/index.php?doc-view-513';
+        //testUrl := 'http://10.1.0.195:81/';
+        //buf := httpver.Get(testUrl);
+
         httpver.Disconnect;
         httpver.Free;
     except
@@ -329,7 +340,7 @@ begin
     mNewVersion := newVer;
     mNewVersionHint := '';
     formVerup.Memo1.Lines.Append('最新版本:'+newVer);
-    if( isNewVersion(newVer) ) then
+    if(  isNewVersion(newVer) ) then
     begin
         statusBar1.Font.Color := clRed;
 

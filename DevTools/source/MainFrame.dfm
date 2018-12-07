@@ -1,5 +1,5 @@
 object FormDevToolsMain: TFormDevToolsMain
-  Left = 273
+  Left = 275
   Top = 247
   Width = 935
   Height = 589

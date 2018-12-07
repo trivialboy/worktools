@@ -1,6 +1,6 @@
 object FormBsspCfgMain: TFormBsspCfgMain
-  Left = 175
-  Top = 91
+  Left = 177
+  Top = 92
   Width = 888
   Height = 587
   Caption = 'BSC'#37197#32622
@@ -23,7 +23,7 @@ object FormBsspCfgMain: TFormBsspCfgMain
     Top = 0
     Width = 878
     Height = 488
-    ActivePage = TabSheet2
+    ActivePage = TabSheet3
     Align = alClient
     TabOrder = 0
     object TabSheet1: TTabSheet
@@ -92,7 +92,7 @@ object FormBsspCfgMain: TFormBsspCfgMain
             Left = 32
             Top = 217
             Width = 121
-            Height = 21
+            Height = 24
             TabOrder = 4
             Text = 'bssp'
             OnChange = cb_prefixClick
@@ -112,7 +112,7 @@ object FormBsspCfgMain: TFormBsspCfgMain
             Left = 121
             Top = 73
             Width = 144
-            Height = 21
+            Height = 24
             EditLabel.Width = 27
             EditLabel.Height = 16
             EditLabel.Caption = #29992#25143':'
@@ -124,7 +124,7 @@ object FormBsspCfgMain: TFormBsspCfgMain
             Left = 121
             Top = 112
             Width = 144
-            Height = 21
+            Height = 24
             EditLabel.Width = 27
             EditLabel.Height = 16
             EditLabel.Caption = #23494#30721':'
@@ -154,7 +154,7 @@ object FormBsspCfgMain: TFormBsspCfgMain
             Left = 98
             Top = 23
             Width = 149
-            Height = 21
+            Height = 24
             Hint = 'business_id '#19994#21153#26631#35782'('#26681#25454#30456#20851#25991#26723#23450#20041#22635#20889')'
             ImeName = #32043#20809#25340#38899#36755#20837#27861
             TabOrder = 1
@@ -183,7 +183,7 @@ object FormBsspCfgMain: TFormBsspCfgMain
             Left = 98
             Top = 53
             Width = 149
-            Height = 21
+            Height = 24
             Hint = 'show_name '#26174#31034#21517#31216
             ImeName = #32043#20809#25340#38899#36755#20837#27861
             TabOrder = 4
@@ -261,7 +261,7 @@ object FormBsspCfgMain: TFormBsspCfgMain
             Left = 98
             Top = 142
             Width = 149
-            Height = 21
+            Height = 24
             Hint = 'lifecycle '#29983#21629#21608#26399'(CRONTAB'#26684#24335')'
             ImeName = #32043#20809#25340#38899#36755#20837#27861
             TabOrder = 10
@@ -305,7 +305,7 @@ object FormBsspCfgMain: TFormBsspCfgMain
             Left = 98
             Top = 201
             Width = 149
-            Height = 21
+            Height = 24
             Hint = 'inure_date '#29983#25928#26102#38388
             ImeName = #32043#20809#25340#38899#36755#20837#27861
             TabOrder = 14
@@ -315,7 +315,7 @@ object FormBsspCfgMain: TFormBsspCfgMain
             Left = 98
             Top = 230
             Width = 149
-            Height = 21
+            Height = 24
             Hint = 'expire_date '#22833#25928#26102#38388
             ImeName = #32043#20809#25340#38899#36755#20837#27861
             TabOrder = 15
@@ -343,7 +343,7 @@ object FormBsspCfgMain: TFormBsspCfgMain
             Left = 98
             Top = 260
             Width = 149
-            Height = 21
+            Height = 24
             Hint = 'description '#25551#36848
             ImeName = #32043#20809#25340#38899#36755#20837#27861
             TabOrder = 18
@@ -1371,7 +1371,7 @@ object FormBsspCfgMain: TFormBsspCfgMain
           Left = 89
           Top = 39
           Width = 149
-          Height = 21
+          Height = 24
           ImeName = #32043#20809#25340#38899#36755#20837#27861
           TabOrder = 7
         end
@@ -1424,7 +1424,7 @@ object FormBsspCfgMain: TFormBsspCfgMain
         object GroupBox6: TGroupBox
           Left = 0
           Top = 0
-          Width = 736
+          Width = 533
           Height = 385
           Align = alTop
           Caption = #39044#32622#26597#35810#35821#21477' BSSP_PREFAB_SQL_STATEMENT'
@@ -1432,7 +1432,7 @@ object FormBsspCfgMain: TFormBsspCfgMain
           object sgSqlStat: TStringGrid
             Left = 2
             Top = 18
-            Width = 732
+            Width = 529
             Height = 302
             Align = alClient
             ColCount = 6
@@ -1465,7 +1465,7 @@ object FormBsspCfgMain: TFormBsspCfgMain
           object Panel15: TPanel
             Left = 2
             Top = 320
-            Width = 732
+            Width = 529
             Height = 63
             Align = alBottom
             BevelOuter = bvNone
@@ -1590,7 +1590,7 @@ object FormBsspCfgMain: TFormBsspCfgMain
           Left = 108
           Top = 49
           Width = 117
-          Height = 21
+          Height = 24
           ImeName = #32043#20809#25340#38899#36755#20837#27861
           TabOrder = 0
           OnChange = EditSqlIDChange
@@ -1599,7 +1599,7 @@ object FormBsspCfgMain: TFormBsspCfgMain
           Left = 108
           Top = 89
           Width = 149
-          Height = 21
+          Height = 24
           ImeName = #32043#20809#25340#38899#36755#20837#27861
           TabOrder = 1
         end
@@ -1688,7 +1688,7 @@ object FormBsspCfgMain: TFormBsspCfgMain
           Left = 108
           Top = 286
           Width = 149
-          Height = 21
+          Height = 24
           TabStop = False
           Color = clScrollBar
           ImeName = #32043#20809#25340#38899#36755#20837#27861
@@ -1700,7 +1700,7 @@ object FormBsspCfgMain: TFormBsspCfgMain
           Left = 108
           Top = 325
           Width = 149
-          Height = 21
+          Height = 24
           TabStop = False
           Color = clScrollBar
           ImeName = #32043#20809#25340#38899#36755#20837#27861
@@ -1712,7 +1712,7 @@ object FormBsspCfgMain: TFormBsspCfgMain
           Left = 108
           Top = 364
           Width = 149
-          Height = 21
+          Height = 24
           ImeName = #32043#20809#25340#38899#36755#20837#27861
           TabOrder = 8
         end
@@ -1809,7 +1809,7 @@ object FormBsspCfgMain: TFormBsspCfgMain
             Left = 69
             Top = 30
             Width = 149
-            Height = 21
+            Height = 24
             ImeName = #32043#20809#25340#38899#36755#20837#27861
             TabOrder = 1
           end
@@ -1884,7 +1884,7 @@ object FormBsspCfgMain: TFormBsspCfgMain
             Left = 276
             Top = 30
             Width = 60
-            Height = 22
+            Height = 26
             MaxValue = 100
             MinValue = 1
             TabOrder = 9
@@ -2039,7 +2039,7 @@ object FormBsspCfgMain: TFormBsspCfgMain
           Left = 148
           Top = 59
           Width = 198
-          Height = 21
+          Height = 24
           ImeName = #32043#20809#25340#38899#36755#20837#27861
           TabOrder = 1
         end
@@ -2066,7 +2066,7 @@ object FormBsspCfgMain: TFormBsspCfgMain
           Left = 581
           Top = 55
           Width = 208
-          Height = 21
+          Height = 24
           ImeName = #32043#20809#25340#38899#36755#20837#27861
           TabOrder = 4
           Text = '30'
@@ -2092,7 +2092,7 @@ object FormBsspCfgMain: TFormBsspCfgMain
           Left = 148
           Top = 98
           Width = 198
-          Height = 21
+          Height = 24
           ImeName = #32043#20809#25340#38899#36755#20837#27861
           TabOrder = 7
         end
@@ -2134,7 +2134,7 @@ object FormBsspCfgMain: TFormBsspCfgMain
           Left = 148
           Top = 138
           Width = 198
-          Height = 21
+          Height = 24
           ImeName = #32043#20809#25340#38899#36755#20837#27861
           TabOrder = 11
           OnChange = EditSevShowNameChange
@@ -2152,7 +2152,7 @@ object FormBsspCfgMain: TFormBsspCfgMain
           Left = 581
           Top = 134
           Width = 237
-          Height = 21
+          Height = 24
           TabStop = False
           Color = clScrollBar
           ImeName = #32043#20809#25340#38899#36755#20837#27861
@@ -2200,7 +2200,7 @@ object FormBsspCfgMain: TFormBsspCfgMain
           Left = 581
           Top = 174
           Width = 237
-          Height = 21
+          Height = 24
           ImeName = #32043#20809#25340#38899#36755#20837#27861
           TabOrder = 17
         end
@@ -2242,7 +2242,7 @@ object FormBsspCfgMain: TFormBsspCfgMain
           Left = 581
           Top = 213
           Width = 237
-          Height = 21
+          Height = 24
           TabStop = False
           Color = clScrollBar
           ImeName = #32043#20809#25340#38899#36755#20837#27861
@@ -2292,7 +2292,7 @@ object FormBsspCfgMain: TFormBsspCfgMain
           Left = 581
           Top = 252
           Width = 237
-          Height = 21
+          Height = 24
           ImeName = #32043#20809#25340#38899#36755#20837#27861
           TabOrder = 25
         end
