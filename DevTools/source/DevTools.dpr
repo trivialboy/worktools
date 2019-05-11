@@ -38,7 +38,8 @@ uses
   UnitPermission in 'permission\UnitPermission.pas' {FormPermission},
   UnitPermissionSQL in 'permission\UnitPermissionSQL.pas' {FormPermissionSQL},
   UnitDBConfig in 'db_config\UnitDBConfig.pas' {DbConfig},
-  UnitHeader in 'HttpSender\UnitHeader.pas' {FormHeader};
+  UnitHeader in 'HttpSender\UnitHeader.pas' {FormHeader},
+  UnitTestDataDesc in 'TestUnit\UnitTestDataDesc.pas' {FormTestDataDesc};
 
 {$R *.res}
 

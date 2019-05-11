@@ -1,6 +1,6 @@
 object FormHttpSender: TFormHttpSender
-  Left = 157
-  Top = 118
+  Left = 148
+  Top = 117
   Width = 1199
   Height = 689
   Caption = 'FormHttpSender'
@@ -564,6 +564,16 @@ object FormHttpSender: TFormHttpSender
         Height = 20
         Caption = #36820#22238#20449#24687
         TabOrder = 2
+      end
+      object cbUnicode2CN: TCheckBox
+        Left = 240
+        Top = 7
+        Width = 113
+        Height = 17
+        Anchors = [akTop, akRight]
+        Caption = 'Unicode'#35299#30721
+        TabOrder = 3
+        OnClick = cbUnicode2CNClick
       end
     end
     object pnl_resp_xml: TPanel

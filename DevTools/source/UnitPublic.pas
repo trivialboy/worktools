@@ -25,7 +25,8 @@ function split(str,subStr:string):TStringList;
 function DecodeUtf8Str(const S:UTF8String): WideString;
 //获取指定目录下的子目录（只取一级子目录）
 function GetDirList(pPath: String): TStringList;
-
+//unicode转中文
+function UnicodeToChinese(inputstr: string): string;
 //
 procedure setVer(v:string);
 function getVer():string;
@@ -42,6 +43,30 @@ end;
 function getVer():string;
 begin
   result := g_sVersion;
+end;
+
+function UnicodeToChinese(inputstr: string): string;
+var
+    i: Integer;
+    index: Integer;
+    temp, top, last: string;
+begin
+    index := 1;
+    while index >= 0 do
+    begin
+        index := Pos('\u', inputstr) - 1;
+        if index < 0 then
+        begin
+            last := inputstr;
+            Result := Result + last;
+            Exit;
+        end;
+        top := Copy(inputstr, 1, index); // 取出 编码字符前的 非 unic 编码的字符，如数字
+        temp := Copy(inputstr, index + 1, 6); // 取出编码，包括 \u,如\u4e3f
+        Delete(temp, 1, 2);
+        Delete(inputstr, 1, index + 6);
+        Result := Result + top + WideChar(StrToInt('$' + temp));
+    end;
 end;
 
 function DecodeUtf8Str(const S:UTF8String): WideString;
@@ -316,6 +341,12 @@ begin
   inputStr := stringReplace(inputStr,#13#10,'',[rfReplaceAll, rfIgnoreCase]);
   //去掉tab符
   inputStr := stringReplace(inputStr,#9,'',[rfReplaceAll, rfIgnoreCase]);
+  //去掉\\多余的\符
+  //inputStr := stringReplace(inputStr,'\\','\',[rfReplaceAll, rfIgnoreCase]);
+  //去掉\/多余的\符
+  //inputStr := stringReplace(inputStr,'\/','/',[rfReplaceAll, rfIgnoreCase]);
+  //去掉\"多余的\符
+  //inputStr := stringReplace(inputStr,'\"','"',[rfReplaceAll, rfIgnoreCase]);
   p := pos('{',inputStr);
   if p>0 then
   begin

@@ -1,13 +1,13 @@
 object DbConfig: TDbConfig
-  Left = 163
-  Top = 121
+  Left = 154
+  Top = 120
   Width = 977
   Height = 566
   Caption = 'DbConfig'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
+  Font.Height = -14
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   FormStyle = fsMDIChild
@@ -16,71 +16,71 @@ object DbConfig: TDbConfig
   Visible = True
   OnClose = FormClose
   OnCreate = FormCreate
-  PixelsPerInch = 96
-  TextHeight = 13
+  PixelsPerInch = 120
+  TextHeight = 16
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 961
-    Height = 527
+    Width = 967
+    Height = 532
     Align = alClient
     TabOrder = 0
     object Panel2: TPanel
       Left = 1
       Top = 1
-      Width = 959
-      Height = 61
+      Width = 965
+      Height = 75
       Align = alTop
       Caption = 'Panel2'
       TabOrder = 0
       object GroupBox1: TGroupBox
         Left = 1
         Top = 1
-        Width = 957
-        Height = 59
+        Width = 963
+        Height = 73
         Align = alClient
         Caption = #36830#25509#25968#25454#24211
         TabOrder = 0
         object Label1: TLabel
-          Left = 8
-          Top = 30
-          Width = 209
-          Height = 13
+          Left = 10
+          Top = 37
+          Width = 257
+          Height = 16
           AutoSize = False
           Caption = #20027#26426#65306#31471#21475#21495#65306'SID'
         end
         object Label2: TLabel
-          Left = 362
-          Top = 32
+          Left = 446
+          Top = 39
           Width = 48
-          Height = 13
+          Height = 16
           Caption = #29992#25143#21517#65306
         end
         object Label3: TLabel
-          Left = 613
-          Top = 32
+          Left = 754
+          Top = 39
           Width = 36
-          Height = 13
+          Height = 16
           Caption = #23494#30721#65306
         end
         object mePassword: TMaskEdit
-          Left = 654
-          Top = 24
-          Width = 121
+          Left = 805
+          Top = 30
+          Width = 149
           Height = 21
           ImeName = #20013#25991' - QQ'#20116#31508#36755#20837#27861
           PasswordChar = '*'
           TabOrder = 2
         end
         object btConnect: TButton
-          Left = 828
-          Top = 19
-          Width = 82
-          Height = 29
+          Left = 1019
+          Top = 23
+          Width = 101
+          Height = 36
           Caption = #36830#25509
           Font.Charset = ANSI_CHARSET
           Font.Color = clWindowText
-          Font.Height = -16
+          Font.Height = -20
           Font.Name = #24494#36719#38597#40657
           Font.Style = []
           ParentFont = False
@@ -88,19 +88,19 @@ object DbConfig: TDbConfig
           OnClick = btConnectClick
         end
         object cbOracleSID: TComboBox
-          Left = 133
-          Top = 24
-          Width = 161
-          Height = 21
+          Left = 164
+          Top = 30
+          Width = 198
+          Height = 24
           ImeName = #20013#25991' - QQ'#20116#31508#36755#20837#27861
-          ItemHeight = 13
+          ItemHeight = 16
           TabOrder = 0
           Text = 'cbOracleSID'
         end
         object edtUser: TEdit
-          Left = 417
-          Top = 24
-          Width = 121
+          Left = 513
+          Top = 30
+          Width = 149
           Height = 21
           ImeName = #20013#25991' - QQ'#20116#31508#36755#20837#27861
           TabOrder = 1
@@ -109,33 +109,35 @@ object DbConfig: TDbConfig
     end
     object Panel3: TPanel
       Left = 1
-      Top = 97
-      Width = 959
-      Height = 429
+      Top = 119
+      Width = 965
+      Height = 412
       Align = alClient
       TabOrder = 1
       object Splitter1: TSplitter
-        Left = 305
+        Left = 375
         Top = 1
-        Height = 427
+        Width = 4
+        Height = 410
       end
       object Splitter2: TSplitter
-        Left = 561
+        Left = 690
         Top = 1
-        Height = 427
+        Width = 4
+        Height = 410
       end
       object Panel4: TPanel
         Left = 1
         Top = 1
-        Width = 304
-        Height = 427
+        Width = 374
+        Height = 410
         Align = alLeft
         Caption = 'Panel4'
         TabOrder = 0
         object Splitter3: TSplitter
           Left = 1
-          Top = 185
-          Width = 302
+          Top = 228
+          Width = 372
           Height = 3
           Cursor = crVSplit
           Align = alTop
@@ -143,16 +145,16 @@ object DbConfig: TDbConfig
         object Panel10: TPanel
           Left = 1
           Top = 1
-          Width = 302
-          Height = 184
+          Width = 372
+          Height = 227
           Align = alTop
           Caption = 'Panel10'
           TabOrder = 0
           object lvUserTables: TListView
             Left = 1
             Top = 1
-            Width = 300
-            Height = 182
+            Width = 370
+            Height = 225
             Align = alClient
             Columns = <
               item
@@ -170,17 +172,17 @@ object DbConfig: TDbConfig
         end
         object Panel11: TPanel
           Left = 1
-          Top = 188
-          Width = 302
-          Height = 238
+          Top = 231
+          Width = 372
+          Height = 178
           Align = alClient
           Caption = 'Panel11'
           TabOrder = 1
           object lvTables: TListView
             Left = 1
             Top = 1
-            Width = 300
-            Height = 236
+            Width = 370
+            Height = 176
             Align = alClient
             Columns = <
               item
@@ -198,38 +200,38 @@ object DbConfig: TDbConfig
         end
       end
       object Panel5: TPanel
-        Left = 308
+        Left = 379
         Top = 1
-        Width = 253
-        Height = 427
+        Width = 311
+        Height = 410
         Align = alLeft
         Caption = 'Panel5'
         TabOrder = 1
         object Splitter4: TSplitter
           Left = 1
-          Top = 257
-          Width = 251
-          Height = 3
+          Top = 316
+          Width = 309
+          Height = 4
           Cursor = crVSplit
           Align = alTop
         end
         object Panel12: TPanel
           Left = 1
-          Top = 260
-          Width = 251
-          Height = 166
+          Top = 320
+          Width = 309
+          Height = 89
           Align = alClient
           TabOrder = 0
           object mmoSql: TMemo
             Left = 1
-            Top = 89
-            Width = 249
-            Height = 76
+            Top = 110
+            Width = 307
+            Height = 95
             Hint = 'select [field] from [table] group by [field] having on .....; '
             Align = alClient
             Font.Charset = ANSI_CHARSET
             Font.Color = clGreen
-            Font.Height = -12
+            Font.Height = -15
             Font.Name = #24494#36719#38597#40657
             Font.Style = []
             ImeName = #20013#25991' - QQ'#20116#31508#36755#20837#27861
@@ -244,19 +246,19 @@ object DbConfig: TDbConfig
           object Panel14: TPanel
             Left = 1
             Top = 1
-            Width = 249
-            Height = 88
+            Width = 307
+            Height = 109
             Align = alTop
             TabOrder = 1
             object chkDefine: TCheckBox
               Left = 0
-              Top = 64
-              Width = 241
-              Height = 17
+              Top = 79
+              Width = 297
+              Height = 21
               Caption = #33258#23450#20041#20010#24615#21270#34920#20027#22495#21450#20998#31867'SQL'#65306
               Font.Charset = ANSI_CHARSET
               Font.Color = clWindowText
-              Font.Height = -13
+              Font.Height = -17
               Font.Name = #24494#36719#38597#40657
               Font.Style = []
               ParentFont = False
@@ -264,32 +266,32 @@ object DbConfig: TDbConfig
             end
             object chkOpt: TCheckBox
               Left = 2
-              Top = 6
-              Width = 241
-              Height = 17
+              Top = 7
+              Width = 297
+              Height = 21
               Caption = #34920#20027#22495#36880#32423#20998#31867#20248#21270#65292#35760#24405#25968#23567#31561#20110#65306
               Font.Charset = ANSI_CHARSET
               Font.Color = clWindowText
-              Font.Height = -13
+              Font.Height = -17
               Font.Name = #24494#36719#38597#40657
               Font.Style = []
               ParentFont = False
               TabOrder = 1
             end
             object edtNumber: TEdit
-              Left = 143
-              Top = 28
-              Width = 81
+              Left = 176
+              Top = 34
+              Width = 100
               Height = 21
               ImeName = #20013#25991' - QQ'#20116#31508#36755#20837#27861
               TabOrder = 2
               Text = '0'
             end
             object UpDown1: TUpDown
-              Left = 224
-              Top = 28
-              Width = 16
-              Height = 21
+              Left = 276
+              Top = 34
+              Width = 19
+              Height = 26
               Associate = edtNumber
               TabOrder = 3
             end
@@ -298,54 +300,55 @@ object DbConfig: TDbConfig
         object Panel13: TPanel
           Left = 1
           Top = 1
-          Width = 251
-          Height = 256
+          Width = 309
+          Height = 315
           Align = alTop
           Caption = 'Panel13'
           TabOrder = 1
           object clbFields: TCheckListBox
             Left = 1
             Top = 1
-            Width = 249
-            Height = 254
+            Width = 307
+            Height = 313
             Align = alClient
             ImeName = #20013#25991' - QQ'#20116#31508#36755#20837#27861
-            ItemHeight = 13
+            ItemHeight = 16
             TabOrder = 0
             OnClick = clbFieldsClick
           end
         end
       end
       object Panel7: TPanel
-        Left = 564
+        Left = 694
         Top = 1
-        Width = 394
-        Height = 427
+        Width = 270
+        Height = 410
         Align = alClient
         TabOrder = 2
         object Panel8: TPanel
           Left = 1
-          Top = 328
-          Width = 392
-          Height = 98
+          Top = 289
+          Width = 268
+          Height = 120
           Align = alBottom
           Caption = 'Panel8'
           TabOrder = 0
           object tmResult: TMemo
             Left = 1
             Top = 1
-            Width = 390
-            Height = 96
+            Width = 266
+            Height = 118
             Align = alClient
             Color = clScrollBar
             Font.Charset = ANSI_CHARSET
             Font.Color = clGreen
-            Font.Height = -12
+            Font.Height = -15
             Font.Name = #24494#36719#38597#40657
             Font.Style = []
             ImeName = #20013#25991' - QQ'#20116#31508#36755#20837#27861
             Lines.Strings = (
-              #23548#20986#32467#26524#20449#24687#65288#29983#25104#25991#20214#21517#21450#22788#29702#35760#24405#25968#65289)
+              #23548#20986#32467#26524#20449#24687#65288#29983#25104#25991#20214#21517#21450#22788#29702
+              #35760#24405#25968#65289)
             ParentFont = False
             ReadOnly = True
             ScrollBars = ssVertical
@@ -355,116 +358,116 @@ object DbConfig: TDbConfig
         object Panel9: TPanel
           Left = 1
           Top = 1
-          Width = 392
-          Height = 327
+          Width = 268
+          Height = 288
           Align = alClient
           TabOrder = 1
           object Label8: TLabel
-            Left = 25
-            Top = 7
-            Width = 298
-            Height = 13
+            Left = 31
+            Top = 9
+            Width = 367
+            Height = 16
             AutoSize = False
             Caption = #24403#21069#34920#38480#21046#35821#21477#65306#65288#19981#21547'where'#65289
           end
           object Label9: TLabel
-            Left = 24
-            Top = 56
-            Width = 290
-            Height = 13
+            Left = 30
+            Top = 69
+            Width = 356
+            Height = 16
             AutoSize = False
             Caption = #38468#21152#26465#20214#20449#24687#65306'(order by....)'
           end
           object Label6: TLabel
-            Left = 19
-            Top = 248
-            Width = 84
-            Height = 13
+            Left = 23
+            Top = 305
+            Width = 104
+            Height = 16
             AutoSize = False
             Caption = #20445#23384#30446#24405#65306
           end
           object edtWhere: TEdit
-            Left = 24
-            Top = 26
-            Width = 333
+            Left = 30
+            Top = 32
+            Width = 409
             Height = 21
             ImeName = #20013#25991' - QQ'#20116#31508#36755#20837#27861
             TabOrder = 0
           end
           object edtInfo: TEdit
-            Left = 24
-            Top = 77
-            Width = 333
+            Left = 30
+            Top = 95
+            Width = 409
             Height = 21
             ImeName = #20013#25991' - QQ'#20116#31508#36755#20837#27861
             TabOrder = 1
           end
           object GroupBox2: TGroupBox
-            Left = 24
-            Top = 105
-            Width = 333
-            Height = 99
+            Left = 30
+            Top = 129
+            Width = 409
+            Height = 122
             Caption = #21035#21517#65288#21487#20026#31354#65289#65306
             TabOrder = 2
             object Label10: TLabel
-              Left = 12
-              Top = 23
+              Left = 15
+              Top = 28
               Width = 60
-              Height = 13
+              Height = 16
               Caption = #29992#25143#21035#21517#65306
             end
             object Label11: TLabel
-              Left = 13
-              Top = 48
+              Left = 16
+              Top = 59
               Width = 48
-              Height = 13
+              Height = 16
               Caption = #34920#21035#21517#65306
             end
             object lbl1: TLabel
-              Left = 15
-              Top = 75
-              Width = 81
-              Height = 13
+              Left = 18
+              Top = 92
+              Width = 86
+              Height = 16
               Caption = 'LOB'#35270#22270#21035#21517#65306
             end
             object edtAlias: TEdit
-              Left = 89
-              Top = 14
-              Width = 229
+              Left = 110
+              Top = 17
+              Width = 281
               Height = 21
               ImeName = #20013#25991' - QQ'#20116#31508#36755#20837#27861
               TabOrder = 0
             end
             object edtTableAlias: TEdit
-              Left = 73
-              Top = 42
-              Width = 245
+              Left = 90
+              Top = 52
+              Width = 301
               Height = 21
               ImeName = #20013#25991' - QQ'#20116#31508#36755#20837#27861
               TabOrder = 1
             end
             object edtViewLob: TEdit
-              Left = 105
-              Top = 70
-              Width = 213
+              Left = 129
+              Top = 86
+              Width = 262
               Height = 21
               ImeName = #20013#25991' - QQ'#20116#31508#36755#20837#27861
               TabOrder = 2
             end
           end
           object chkClob: TCheckBox
-            Left = 24
-            Top = 214
-            Width = 193
-            Height = 17
+            Left = 30
+            Top = 263
+            Width = 237
+            Height = 21
             Caption = 'CLOB'#31354#26102#20026'null'
             TabOrder = 3
           end
           object btFilePath: TButton
-            Left = 316
-            Top = 242
-            Width = 17
-            Height = 20
+            Left = 389
+            Top = 298
+            Width = 21
+            Height = 24
             Hint = #30446#24405#36873#25321
             Caption = '...'
             ParentShowHint = False
@@ -473,10 +476,10 @@ object DbConfig: TDbConfig
             OnClick = btFilePathClick
           end
           object Button1: TButton
-            Left = 333
-            Top = 242
-            Width = 24
-            Height = 20
+            Left = 410
+            Top = 298
+            Width = 29
+            Height = 24
             Hint = #23450#20301#21040#30446#24405
             Caption = 'goto'
             ParentShowHint = False
@@ -485,14 +488,14 @@ object DbConfig: TDbConfig
             OnClick = Button1Click
           end
           object btStart: TButton
-            Left = 128
-            Top = 272
-            Width = 125
-            Height = 42
+            Left = 158
+            Top = 335
+            Width = 153
+            Height = 51
             Caption = #24320#22987#23548#20986
             Font.Charset = ANSI_CHARSET
             Font.Color = clNavy
-            Font.Height = -16
+            Font.Height = -20
             Font.Name = #24494#36719#38597#40657
             Font.Style = [fsBold]
             ParentFont = False
@@ -500,30 +503,30 @@ object DbConfig: TDbConfig
             OnClick = btStartClick
           end
           object btnResult: TButton
-            Left = 25
-            Top = 292
-            Width = 68
-            Height = 22
+            Left = 31
+            Top = 359
+            Width = 83
+            Height = 27
             Caption = #38544#34255#32467#26524
             TabOrder = 7
             OnClick = btnResultClick
           end
           object Button2: TButton
-            Left = 280
-            Top = 288
-            Width = 75
-            Height = 25
+            Left = 345
+            Top = 354
+            Width = 92
+            Height = 31
             Caption = #20445#23384#37197#32622
             TabOrder = 8
             OnClick = Button2Click
           end
           object cbbPath: TComboBox
-            Left = 85
-            Top = 242
-            Width = 231
-            Height = 21
+            Left = 105
+            Top = 298
+            Width = 284
+            Height = 24
             ImeName = #20013#25991' - QQ'#20116#31508#36755#20837#27861
-            ItemHeight = 13
+            ItemHeight = 16
             TabOrder = 9
             Text = 'cbbPath'
           end
@@ -532,31 +535,31 @@ object DbConfig: TDbConfig
     end
     object Panel6: TPanel
       Left = 1
-      Top = 62
-      Width = 959
-      Height = 35
+      Top = 76
+      Width = 965
+      Height = 43
       Align = alTop
       TabOrder = 2
       object Label4: TLabel
-        Left = 8
-        Top = 12
-        Width = 177
-        Height = 13
+        Left = 10
+        Top = 15
+        Width = 218
+        Height = 16
         AutoSize = False
         Caption = #35201#23548#20986#30340#34920#65306
       end
       object Label5: TLabel
-        Left = 311
-        Top = 12
-        Width = 209
-        Height = 14
+        Left = 383
+        Top = 15
+        Width = 257
+        Height = 17
         AutoSize = False
         Caption = #36873#21462#34920#20027#22495#21450#39034#24207#35843#25972#65306
       end
       object edtTable: TEdit
-        Left = 95
-        Top = 7
-        Width = 209
+        Left = 117
+        Top = 9
+        Width = 257
         Height = 21
         Hint = #36755#20837#34920#21517#21518#25353#22238#36710#38190
         ImeName = #20013#25991' - QQ'#20116#31508#36755#20837#27861
@@ -569,28 +572,28 @@ object DbConfig: TDbConfig
         OnKeyDown = edtTableKeyDown
       end
       object ButtonPrev: TButton
-        Left = 470
-        Top = 5
-        Width = 44
-        Height = 24
+        Left = 578
+        Top = 6
+        Width = 55
+        Height = 30
         Caption = #19978#31227
         TabOrder = 1
         OnClick = ButtonPrevClick
       end
       object ButtonNext: TButton
-        Left = 514
-        Top = 5
-        Width = 44
-        Height = 24
+        Left = 633
+        Top = 6
+        Width = 54
+        Height = 30
         Caption = #19979#31227
         TabOrder = 2
         OnClick = ButtonNextClick
       end
       object ButtonDele: TButton
-        Left = 558
-        Top = 5
-        Width = 44
-        Height = 24
+        Left = 687
+        Top = 6
+        Width = 54
+        Height = 30
         Caption = #21024#38500
         TabOrder = 3
         OnClick = ButtonDeleClick

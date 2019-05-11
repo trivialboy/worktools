@@ -67,7 +67,7 @@ object FormBsspExporter: TFormBsspExporter
       Left = 336
       Top = 25
       Width = 121
-      Height = 21
+      Height = 24
       EditLabel.Width = 41
       EditLabel.Height = 16
       EditLabel.Caption = 'USER:'
@@ -79,7 +79,7 @@ object FormBsspExporter: TFormBsspExporter
       Left = 560
       Top = 25
       Width = 121
-      Height = 21
+      Height = 24
       EditLabel.Width = 82
       EditLabel.Height = 16
       EditLabel.Caption = 'PASSWORD:'
@@ -134,7 +134,7 @@ object FormBsspExporter: TFormBsspExporter
           Left = 16
           Top = 25
           Width = 705
-          Height = 21
+          Height = 24
           Enabled = False
           TabOrder = 0
           Text = 'd:\'
@@ -338,7 +338,7 @@ object FormBsspExporter: TFormBsspExporter
             Left = 16
             Top = 25
             Width = 121
-            Height = 21
+            Height = 24
             TabOrder = 0
             Text = 'bssp'
             OnChange = edPreFixChange

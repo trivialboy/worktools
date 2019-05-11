@@ -68,6 +68,7 @@ type
     bbtnSetHeader: TSpeedButton;
     sbtnRespHtml: TSpeedButton;
     cbox_raw: TCheckBox;
+    cbUnicode2CN: TCheckBox;
     procedure BitBtn31Click(Sender: TObject);
     procedure SpeedButton3Click(Sender: TObject);
     procedure sbtnReqXmlClick(Sender: TObject);
@@ -98,6 +99,7 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure bbtnSetHeaderClick(Sender: TObject);
     procedure sbtnRespHtmlClick(Sender: TObject);
+    procedure cbUnicode2CNClick(Sender: TObject);
 
 
 
@@ -202,7 +204,7 @@ var
   FileName :string;
   ts: TStringList;
   strReq : string;
-  ws,sendAddr : String;
+  ws,sendAddr,respStr : String;
   http: TIdHTTP;
   rscode : integer;
 begin
@@ -273,9 +275,15 @@ begin
 
 
             if  cbUtf8Decode.checked then //and (pos('charset=UTF-8',idhttp1.Response.ContentType)>0)   then
-              m_resp.text := DecodeUtf8Str(ws) 
-            else
-              m_resp.text := ws;
+            begin
+              ws := DecodeUtf8Str(ws);
+            end ;
+            if cbUnicode2CN.Checked then
+            begin
+              ws := UnicodeToChinese(ws);
+            end;
+
+            m_resp.text := ws;
 
             if sbtnRespXml.Down then
               xmlClick(sbtnRespXml,  pnl_resp_xml,pnl_resp_text,web_resp, m_resp)
@@ -698,6 +706,7 @@ procedure TFormHttpSender.SpeedButton8Click(Sender: TObject);
 var
     outStr : string;
 begin
+
     outStr := formatJson('  ', m_resp.Text);
     showInRichEdit(outStr, m_resp);
 
@@ -969,6 +978,14 @@ procedure TFormHttpSender.sbtnRespHtmlClick(Sender: TObject);
 begin
     htmlClick(sender, pnl_resp_xml,pnl_resp_text,web_resp, m_resp);
 
+end;
+
+procedure TFormHttpSender.cbUnicode2CNClick(Sender: TObject);
+begin
+  if cbUnicode2CN.Checked then
+  begin
+    m_resp.Text := UnicodeToChinese(m_resp.Text);
+  end ;
 end;
 
 initialization

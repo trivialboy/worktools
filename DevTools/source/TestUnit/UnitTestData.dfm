@@ -1,8 +1,8 @@
 object FormTestData: TFormTestData
-  Left = 265
-  Top = 168
-  Width = 966
-  Height = 575
+  Left = 335
+  Top = 224
+  Width = 1086
+  Height = 711
   Caption = #29992#25143#25968#25454#23548#20986
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -12,22 +12,24 @@ object FormTestData: TFormTestData
   Font.Style = []
   OldCreateOrder = False
   OnClose = FormClose
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
   OnShow = FormShow
   PixelsPerInch = 120
   TextHeight = 16
   object Panel1: TPanel
     Left = 434
     Top = 0
-    Width = 522
-    Height = 522
+    Width = 642
+    Height = 658
     Align = alClient
     Caption = 'Panel1'
     TabOrder = 0
     object MemoExport: TMemo
       Left = 1
       Top = 1
-      Width = 520
-      Height = 520
+      Width = 640
+      Height = 656
       Align = alClient
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
@@ -45,7 +47,7 @@ object FormTestData: TFormTestData
     Left = 0
     Top = 0
     Width = 434
-    Height = 522
+    Height = 658
     Align = alLeft
     BevelOuter = bvNone
     TabOrder = 1
@@ -53,7 +55,7 @@ object FormTestData: TFormTestData
       Left = 0
       Top = 0
       Width = 434
-      Height = 159
+      Height = 137
       Align = alTop
       Caption = 'CCS'#25968#25454#24211#36830#25509
       TabOrder = 0
@@ -81,9 +83,9 @@ object FormTestData: TFormTestData
           '10.1.0.211:1521:kf')
       end
       object bbtnDbOpen: TBitBtn
-        Left = 274
+        Left = 284
         Top = 34
-        Width = 105
+        Width = 98
         Height = 31
         Caption = #36830#25509#25968#25454#24211
         TabOrder = 2
@@ -91,9 +93,9 @@ object FormTestData: TFormTestData
       end
       object bbtnDbClose: TBitBtn
         Left = 284
-        Top = 94
+        Top = 78
         Width = 98
-        Height = 30
+        Height = 31
         Caption = #26029#24320#36830#25509
         Enabled = False
         TabOrder = 3
@@ -103,7 +105,7 @@ object FormTestData: TFormTestData
         Left = 101
         Top = 63
         Width = 144
-        Height = 21
+        Height = 24
         EditLabel.Width = 27
         EditLabel.Height = 16
         EditLabel.Caption = #29992#25143':'
@@ -115,7 +117,7 @@ object FormTestData: TFormTestData
         Left = 101
         Top = 102
         Width = 144
-        Height = 21
+        Height = 24
         EditLabel.Width = 27
         EditLabel.Height = 16
         EditLabel.Caption = #23494#30721':'
@@ -126,14 +128,14 @@ object FormTestData: TFormTestData
     end
     object Panel3: TPanel
       Left = 0
-      Top = 472
+      Top = 608
       Width = 434
       Height = 50
       Align = alBottom
       BevelOuter = bvNone
       TabOrder = 1
       object bbtExport: TBitBtn
-        Left = 79
+        Left = 216
         Top = 10
         Width = 92
         Height = 31
@@ -143,7 +145,7 @@ object FormTestData: TFormTestData
         OnClick = bbtExportClick
       end
       object BitBtn1: TBitBtn
-        Left = 204
+        Left = 316
         Top = 10
         Width = 93
         Height = 31
@@ -151,20 +153,38 @@ object FormTestData: TFormTestData
         TabOrder = 1
         OnClick = BitBtn1Click
       end
+      object BitBtn2: TBitBtn
+        Left = 116
+        Top = 10
+        Width = 92
+        Height = 31
+        Caption = #20445#23384#33050#26412
+        TabOrder = 2
+        OnClick = BitBtn2Click
+      end
+      object BitBtn3: TBitBtn
+        Left = 16
+        Top = 10
+        Width = 92
+        Height = 31
+        Caption = #21152#36733#33050#26412
+        TabOrder = 3
+        OnClick = BitBtn3Click
+      end
     end
     object Panel4: TPanel
       Left = 0
-      Top = 159
+      Top = 137
       Width = 434
-      Height = 313
+      Height = 471
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 2
       object memoTables: TMemo
         Left = 0
-        Top = 238
+        Top = 225
         Width = 434
-        Height = 75
+        Height = 246
         Align = alClient
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -172,13 +192,25 @@ object FormTestData: TFormTestData
         Font.Name = 'MS Sans Serif'
         Font.Style = []
         Lines.Strings = (
+          '#'#29992#25143#36164#26009
           
             'users:home_city=vHomeCity,user_id=vUserId,msisdn=vMsisdn,imsi=vI' +
             'msi'
           'user_product:home_city=vHomeCity,user_id=vUserId'
           'customer:home_city=vHomeCity,customer_id=vCustomerId'
           'user_services:home_city=vHomeCity,obj_id=vUserId'
-          '')
+          '#'#23485#24102#29992#25143#36164#26009
+          'broadband_users:home_city=vHomeCity,user_id=vBroadbandUid'
+          'user_product:home_city=vHomeCity,user_id=vBroadbandUid'
+          '#'#20114#32852#32593#30005#35270#29992#25143#36164#26009
+          'itv_users:home_city=vHomeCity,user_id=vItvUid'
+          'user_product:home_city=vHomeCity,user_id=vItvUid'
+          '#'#20843#38397#35270#39057#29992#25143#36164#26009
+          'mtv_users:home_city=vHomeCity,user_id=vMtvUid'
+          'user_product:home_city=vHomeCity,user_id=vMtvUid'
+          '#'#32479#19968#29992#25143#36164#26009
+          'user_aggregation:home_city=vHomeCity,user_id=vAggregationUid'
+          'user_aggregation_relation:aggregation_user_id=vAggregationUid')
         ParentFont = False
         ScrollBars = ssBoth
         TabOrder = 0
@@ -188,20 +220,36 @@ object FormTestData: TFormTestData
         Left = 0
         Top = 0
         Width = 434
-        Height = 238
+        Height = 225
         Align = alTop
         TabOrder = 1
+        object Label1: TLabel
+          Left = 24
+          Top = 48
+          Width = 60
+          Height = 16
+          Caption = #21495#30721#31867#22411#65306
+        end
+        object SpeedButton1: TSpeedButton
+          Left = 128
+          Top = 168
+          Width = 23
+          Height = 22
+          Caption = '...'
+          OnClick = SpeedButton1Click
+        end
         object StaticText3: TStaticText
           Left = 20
-          Top = 177
-          Width = 354
-          Height = 20
-          Caption = #20869#37096#21464#37327':  vHomeCity, vMsisdn, vUserId, vCustomerId, vImsi'
+          Top = 169
+          Width = 97
+          Height = 24
+          AutoSize = False
+          Caption = #20869#37096#21464#37327#35828#26126#65306
           TabOrder = 0
         end
         object StaticText4: TStaticText
           Left = 20
-          Top = 148
+          Top = 140
           Width = 368
           Height = 20
           Caption = #33509#26080#20851#38190#23383#27573', '#21017#40664#35748#20026' home_city=vHomeCity,user_id=vUserId'
@@ -215,9 +263,9 @@ object FormTestData: TFormTestData
           Caption = #34920#21517':'#20851#38190#23383#27573'1='#20869#37096#21464#37327','#20851#38190#23383#27573'2='#20869#37096#21464#37327
           TabOrder = 2
         end
-        object StaticText1: TStaticText
+        object stextSqlFile: TStaticText
           Left = 20
-          Top = 207
+          Top = 191
           Width = 46
           Height = 20
           Caption = #29992#25143#34920': '
@@ -226,11 +274,11 @@ object FormTestData: TFormTestData
         object lbedtMsisdn: TLabeledEdit
           Left = 98
           Top = 79
-          Width = 149
-          Height = 21
-          EditLabel.Width = 63
+          Width = 223
+          Height = 24
+          EditLabel.Width = 67
           EditLabel.Height = 16
-          EditLabel.Caption = #29992#25143#21495#30721':    '
+          EditLabel.Caption = #36134#21495'/'#21495#30721#65306' '
           LabelPosition = lpLeft
           TabOrder = 4
           Text = '13809567226'
@@ -243,13 +291,29 @@ object FormTestData: TFormTestData
           Caption = #26681#25454#21495#30721#23548#20986#29992#25143#25968#25454', '#21487#29992#20110#29992#20363#22330#26223#24674#22797#25110#36801#31227
           TabOrder = 5
         end
+        object cbAccountType: TComboBox
+          Left = 96
+          Top = 48
+          Width = 185
+          Height = 22
+          Style = csOwnerDrawFixed
+          ItemHeight = 16
+          ItemIndex = 0
+          TabOrder = 6
+          Text = '1-'#25163#26426#21495#30721
+          Items.Strings = (
+            '1-'#25163#26426#21495#30721
+            '2-MTV'#36134#21495
+            '3-'#23485#24102#36134#21495
+            '4-ITV'#36134#21495)
+        end
       end
     end
   end
   object StatusBar1: TStatusBar
     Left = 0
-    Top = 522
-    Width = 956
+    Top = 658
+    Width = 1076
     Height = 19
     Panels = <
       item
@@ -268,5 +332,21 @@ object FormTestData: TFormTestData
     Session = oraConn
     Left = 408
     Top = 144
+  end
+  object OpenDialog1: TOpenDialog
+    DefaultExt = '*.sql'
+    Filter = 'SQL'#33050#26412'|*.sql'
+    InitialDir = '.'
+    Options = [ofFileMustExist, ofEnableSizing]
+    Left = 392
+    Top = 217
+  end
+  object SaveDialog1: TSaveDialog
+    DefaultExt = '*.sql'
+    Filter = 'SQL'#33050#26412'|*.sql'
+    InitialDir = '.'
+    Options = [ofOverwritePrompt, ofHideReadOnly, ofEnableSizing]
+    Left = 392
+    Top = 257
   end
 end

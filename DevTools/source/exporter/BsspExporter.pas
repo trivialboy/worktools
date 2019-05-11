@@ -231,24 +231,23 @@ begin
             adoQuery2.SQL.Add(' where business_id='+business_id+' order by request_source');
             adoQuery2.Open;
             str.Add('--------bssp_business_request_relation--------');
-            str.Add('DELETE FROM '+m_prefix_user+'bssp_business_request_relation WHERE business_id='+business_id+';');
             while not adoQuery2.Eof do
             begin
-			 //'DELETE FROM '+m_prefix_user+'bssp_business_request_relation WHERE business_id='+business_id+' AND request_source='+adoQuery2.FieldByName('request_source').AsString+';'+#13#10
-			str2 :=	 'INSERT INTO '+m_prefix_user+'bssp_business_request_relation( business_id, request_source, lifecycle, need_verify, status, need_fuzzy, inure_date, expire_date,  create_date,  modify_date, DESCRIPTION) '+#13#10
-				+ 'VALUES('+#13#10
-				+ adoQuery2.FieldByName('business_id').AsString+',                      --business_id'+#13#10
-				+ adoQuery2.FieldByName('request_source').AsString+',                             --request_source'+#13#10
-				+ ''''+adoQuery2.FieldByName('lifecycle').AsString+''',                        --lifecycle 生命周期(CRONTAB格式)'+#13#10
-				+ adoQuery2.FieldByName('need_verify').AsString+',                                  --need_verify 是否需要安全校验 0 不需要 1 需要'+#13#10
-				+ adoQuery2.FieldByName('status').AsString+',                                  --status 状态 1	正常 2	停用 3	注销'+#13#10
-				+ adoQuery2.FieldByName('need_fuzzy').AsString+',                               --need_fuzzy 模糊化 0 否 1 是'+#13#10
-				+ 'to_date('''+adoQuery2.FieldByName('inure_date').AsString+''',''yyyymmdd''),     --inure_date'+#13#10
-				+ 'to_date('''+adoQuery2.FieldByName('expire_date').AsString+''',''yyyymmdd''),     --expire_date'+#13#10
-				+ 'to_date('''+adoQuery2.FieldByName('create_date').AsString+''',''yyyymmdd''),     --create_date'+#13#10
-				+ 'SYSDATE,                               --modify_date'+#13#10
-				+ '''' + adoQuery2.FieldByName('description').AsString +'''                  --description'+#13#10
-				+ ');'+#13#10;
+            str2 := 'DELETE FROM '+m_prefix_user+'bssp_business_request_relation WHERE business_id='+business_id+' AND request_source='+adoQuery2.FieldByName('request_source').AsString+';' ;
+    			  str2 := str2 + #13#10 +	 'INSERT INTO '+m_prefix_user+'bssp_business_request_relation( business_id, request_source, lifecycle, need_verify, status, need_fuzzy, inure_date, expire_date,  create_date,  modify_date, DESCRIPTION) '+#13#10
+    				+ 'VALUES('+#13#10
+    				+ adoQuery2.FieldByName('business_id').AsString+',                      --business_id'+#13#10
+    				+ adoQuery2.FieldByName('request_source').AsString+',                             --request_source'+#13#10
+    				+ ''''+adoQuery2.FieldByName('lifecycle').AsString+''',                        --lifecycle 生命周期(CRONTAB格式)'+#13#10
+    				+ adoQuery2.FieldByName('need_verify').AsString+',                                  --need_verify 是否需要安全校验 0 不需要 1 需要'+#13#10
+    				+ adoQuery2.FieldByName('status').AsString+',                                  --status 状态 1	正常 2	停用 3	注销'+#13#10
+    				+ adoQuery2.FieldByName('need_fuzzy').AsString+',                               --need_fuzzy 模糊化 0 否 1 是'+#13#10
+    				+ 'to_date('''+adoQuery2.FieldByName('inure_date').AsString+''',''yyyymmdd''),     --inure_date'+#13#10
+    				+ 'to_date('''+adoQuery2.FieldByName('expire_date').AsString+''',''yyyymmdd''),     --expire_date'+#13#10
+    				+ 'to_date('''+adoQuery2.FieldByName('create_date').AsString+''',''yyyymmdd''),     --create_date'+#13#10
+    				+ 'SYSDATE,                               --modify_date'+#13#10
+    				+ '''' + adoQuery2.FieldByName('description').AsString +'''                  --description'+#13#10
+    				+ ');'+#13#10;
 
                 str.Add(str2);
                 adoQuery2.Next;

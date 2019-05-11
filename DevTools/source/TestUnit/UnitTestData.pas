@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, DB, MemDS, DBAccess, Ora, StdCtrls, ExtCtrls, Buttons,
-  UnitFormFactory, ComCtrls,IniFiles;
+  UnitFormFactory, ComCtrls,IniFiles,UnitTestDataDesc;
 
 type
 
@@ -30,6 +30,8 @@ CUserTable = class
     sGetFieldsStr,sInsFieldsStr  : string; // select, insert 字段串
     sGetCondition,sDelCondition : string; // select, delete 条件
     sInsertFunc : string; // insert 函数
+    nTabSeq : integer; //同名表序号，第一个为0
+    sProcName : string ; //脚本过程名称，多个同名表有多个过程名
   private
     procedure setKey(str : string; m_KeyColumnName : TStringList);//分解并设置关键字段含义
     procedure genInsertFunc(); //构造insert函数
@@ -41,6 +43,9 @@ CUserInfo = class
     sMsisdn : string; //号码
     sUserId : string; //用户标识
     sCustomerId : string; //客户标识
+    sMtvAccount : string;
+    sItvAccount : string;
+    sBroadbandAccount : string;
     sKeyValues : TStringList; //内部变量名对应值
     sKeyType : TStringList; //内部变量类型
   private
@@ -76,10 +81,17 @@ CUsers = class
     StaticText3: TStaticText;
     StaticText4: TStaticText;
     StaticText2: TStaticText;
-    StaticText1: TStaticText;
+    stextSqlFile: TStaticText;
     lbedtMsisdn: TLabeledEdit;
     StatusBar1: TStatusBar;
     StaticText5: TStaticText;
+    cbAccountType: TComboBox;
+    Label1: TLabel;
+    BitBtn2: TBitBtn;
+    BitBtn3: TBitBtn;
+    OpenDialog1: TOpenDialog;
+    SaveDialog1: TSaveDialog;
+    SpeedButton1: TSpeedButton;
     procedure bbtnDbOpenClick(Sender: TObject);
     procedure bbtnDbCloseClick(Sender: TObject);
     procedure bbtExportClick(Sender: TObject);
@@ -88,12 +100,21 @@ CUsers = class
     procedure memoTablesKeyPress(Sender: TObject; var Key: Char);
     procedure FormShow(Sender: TObject);
     procedure BitBtn1Click(Sender: TObject);
+    procedure BitBtn3Click(Sender: TObject);
+    procedure BitBtn2Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure SpeedButton1Click(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
 
   private
     { Private declarations }
     m_users : CUsers;   // 本次采集的用户核心信息
     m_tables : TStringList ; // 本次采集的表集合
     m_KeyColumnName : TStringList; //系统支持的内部变量名称
+    m_sqlFile : string; //加载的sql脚本名称
+    FormTestDataDesc: TFormTestDataDesc;
+
+    procedure initVar();
     procedure setButton4DBOpen();
     procedure setButton4DBClose();
     procedure getTableInfo( tab : CUserTable);
@@ -101,7 +122,12 @@ CUsers = class
     procedure getUserInfo();
     procedure exportSQL();
     procedure prepareTargetTables();
-
+    procedure getMsisdnUserInfo();
+    procedure getMtvUserInfo();
+    procedure getItvUserInfo();
+    procedure getBroadbandUserInfo();
+    procedure getBaseUserInfo(account : string);
+    procedure setTableSeq(var table : CUserTable);
   public
     { Public declarations }
   end;
@@ -134,7 +160,7 @@ var
   col : CTableCol;
 begin
   //
-  funcStr := 'PROCEDURE in_'+stringReplace(self.sTableName, '_','',[rfReplaceAll]) +'(';
+  funcStr := 'PROCEDURE in_'+self.sProcName +'(';
   //字段参数
   str := '@';
   for i :=0 to self.sKeyColumns.Count -1 do
@@ -227,8 +253,8 @@ begin
       end;
       self.sKeyColumns.Values[uppercase(trim(str2[0]))] := key;
 
+      str2.Free;
     end;
-    str2.Free;
   end;
   strList.Free;
 end;
@@ -284,8 +310,7 @@ begin
     end;
   except
   end;
-  bbtnDbOpen.enabled := true;
-  bbtnDbClose.enabled := false;
+  setButton4DBClose();
 
 end;
 procedure TFormTestData.getTableInfo( tab : CUserTable);
@@ -308,7 +333,7 @@ begin
     tab.sGetFieldsStr := '@';
     tab.sInsFieldsStr := '@';
     //tab.sKeyColumns.Sort;
-    isKey := false;
+    //isKey := false;
     while not oraQry.Eof do
     begin
       colName := oraQry.FieldByName('COLUMN_NAME').AsString;
@@ -376,23 +401,95 @@ begin
   // 构造delete/insert/select语句模板
   tab.genInsertFunc();
 end;
+
 procedure TFormTestData.getUserInfo();
+begin
+  case  cbAccountType.ItemIndex of
+    0 : begin
+      getMsisdnUserInfo();
+    end;
+    1 : begin
+      getMtvUserInfo();
+    end;
+    2 : begin
+      getBroadbandUserInfo();
+    end;
+    3 : begin
+      getItvUserInfo();
+    end;
+    else begin
+      showmessage('必须选择一种账号类型');
+      exit;
+    end;
+  end;
+
+end;
+
+procedure  TFormTestData.getBaseUserInfo(account : string);
 var
-  sqlSelect,msisdn : string;
+  i,j :integer;
   userInfo: CUserInfo;
-  i ,j: integer;
   col : CTableCol;
 begin
-{根据输入的用户号码, 获取基本关键资料, home_city ,user_id, customer_id 等, 用于后续提取用户数据查询条件 }
+  if m_users <> nil then
+  begin
+    m_users.Free;
+    m_users := nil;
+  end;
   m_users := CUsers.Create;
-  msisdn := lbedtMsisdn.Text;
-  statusbar1.Panels[1].Text := msisdn;
+
+  oraQry.ParamByName('vAccount').asString := account;
+  oraQry.Open;
+  i := 0;
+
+  while not oraQry.Eof do
+  begin
+    i:=i+1;
+    setLength(m_users.arrUserInfo,i);
+    userInfo := CUserInfo.Create;
+    userInfo.sKeyValues := TStringList.Create;
+    userInfo.sKeyType := TStringList.Create;
+    userInfo.nHomeCity := oraQry.FieldByName('home_city').asInteger;
+    userInfo.sMsisdn := oraQry.FieldByName('msisdn').asString;
+    userInfo.sMtvAccount := oraQry.FieldByName('mtv_account').AsString;
+    userInfo.sItvAccount := oraQry.FieldByName('itv_account').AsString;
+    userInfo.sBroadbandAccount := oraQry.FieldByName('broadband_account').AsString;
+
+    for j:=0 to m_KeyColumnName.count-1 do
+    begin
+      col := m_KeyColumnName.Objects[j] as CTableCol ;
+      userInfo.sKeyValues.Values[ m_KeyColumnName[j] ] := oraQry.FieldByName(col.colName).asString;
+      userInfo.sKeyType.Values[ m_KeyColumnName[j] ] := col.colTypeName +'('+inttostr(col.colLen)+')';
+    end;
+    m_users.arrUserInfo[i-1] := userInfo;
+    oraQry.Next;
+  end;
+  oraQry.Close;
+  m_users.nUserCnt := i;
+  if (i=0) then
+  begin
+    raise exception.Create(account+'用户/账号不存在');
+  end;
+end;
+procedure TFormTestData.getMsisdnUserInfo();
+var
+  account : string;
+
+begin
+{根据输入的用户号码, 获取基本关键资料, home_city ,user_id, customer_id 等, 用于后续提取用户数据查询条件 }
+//  m_users := CUsers.Create;
+  account := lbedtMsisdn.Text;
+  statusbar1.Panels[1].Text := account;
   self.Refresh;
 
-  sqlSelect := 'select home_city,user_id,msisdn,customer_id,imsi from users where msisdn=:vMsisdn';
-  oraQry.SQL.SetText(pchar(sqlSelect));
-  oraQry.ParamByName('vMsisdn').asString := msisdn;
-  oraQry.Open;
+//  sqlSelect := 'select home_city,user_id,msisdn,customer_id,imsi,'''' MTV_USER_ID,'''' MTV_ACCOUNT, '''' ITV_ACCOUNT, '''' ITV_USER_ID, '''' BROADBAND_ACCOUNT, '''' BROADBAND_USER_ID from users where msisdn=:vMsisdn';
+  oraQry.SQL.Clear;
+  oraQry.SQL.Add('select A.home_city,A.user_id,A.msisdn,A.customer_id,A.imsi');
+  oraQry.SQL.Add(','''' MTV_USER_ID,'''' MTV_ACCOUNT, '''' ITV_ACCOUNT, '''' ITV_USER_ID, '''' BROADBAND_ACCOUNT, '''' BROADBAND_USER_ID, c.user_id AGGREGATION_UID');
+  oraQry.SQL.Add(' from users a,user_aggregation c where a.msisdn=:vAccount and a.user_id=c.payment_user_id(+)');
+  getBaseUserInfo(account);
+
+{  oraQry.Open;
   i := 0;
 
   while not oraQry.Eof do
@@ -420,7 +517,167 @@ begin
   begin
     raise exception.Create(msisdn+'用户不存在');
   end;
+}
+end;
+procedure TFormTestData.getMtvUserInfo();
+var
+  account : string;
 
+begin
+{根据输入的用户号码, 获取基本关键资料, home_city ,user_id, customer_id 等, 用于后续提取用户数据查询条件 }
+//  m_users := CUsers.Create;
+  account := lbedtMsisdn.Text;
+  statusbar1.Panels[1].Text := account;
+  self.Refresh;
+
+//  sqlSelect := 'select a.home_city,a.user_id mtv_user_id,a.user_name mtv_account,b.user_id,b.msisdn,b.customer_id,b.imsi, '''' ITV_ACCOUNT, '''' ITV_USER_ID, '''' BROADBAND_ACCOUNT, '''' BROADBAND_USER_ID from mtv_users a,users b where a.user_name=:vAccount and a.payment_user_id=b.user_id';
+  oraQry.SQL.Clear;
+  oraQry.SQL.Add('select a.home_city,a.user_id mtv_user_id,a.user_name mtv_account,b.user_id,b.msisdn,b.customer_id,b.imsi');
+  oraQry.SQL.Add(', '''' ITV_ACCOUNT, '''' ITV_USER_ID, '''' BROADBAND_ACCOUNT, '''' BROADBAND_USER_ID, c.user_id AGGREGATION_UID');
+  oraQry.SQL.Add('from mtv_users a,users b ,user_aggregation c where a.user_name=:vAccount and a.payment_user_id=b.user_id and b.user_id=c.payment_user_id(+)');
+  getBaseUserInfo(account);
+
+{  oraQry.ParamByName('vAccount').asString := account;
+  oraQry.Open;
+  i := 0;
+
+  while not oraQry.Eof do
+  begin
+    i:=i+1;
+    setLength(m_users.arrUserInfo,i);
+    userInfo := CUserInfo.Create;
+    userInfo.sKeyValues := TStringList.Create;
+    userInfo.sKeyType := TStringList.Create;
+    userInfo.nHomeCity := oraQry.FieldByName('home_city').asInteger;
+    userInfo.sMsisdn := oraQry.FieldByName('msisdn').asString;
+    userInfo.sMtvAccount := oraQry.FieldByName('mtv_account').AsString;
+    userInfo.sItvAccount := oraQry.FieldByName('itv_account').AsString;
+    userInfo.sBroadbandAccount := oraQry.FieldByName('broadband_account').AsString;
+
+
+    for j:=0 to m_KeyColumnName.count-1 do
+    begin
+      col := m_KeyColumnName.Objects[j] as CTableCol ;
+      userInfo.sKeyValues.Values[ m_KeyColumnName[j] ] := oraQry.FieldByName(col.colName).asString;
+      userInfo.sKeyType.Values[ m_KeyColumnName[j] ] := col.colTypeName +'('+inttostr(col.colLen)+')';
+    end;
+    m_users.arrUserInfo[i-1] := userInfo;
+    oraQry.Next;
+  end;
+  oraQry.Close;
+  m_users.nUserCnt := i;
+  if (i=0) then
+  begin
+    raise exception.Create(account+'用户/账号不存在');
+  end;
+}
+end;
+procedure TFormTestData.getItvUserInfo();
+var
+  account : string;
+
+begin
+{根据输入的用户号码, 获取基本关键资料, home_city ,user_id, customer_id 等, 用于后续提取用户数据查询条件 }
+//  m_users := CUsers.Create;
+  account := lbedtMsisdn.Text;
+  statusbar1.Panels[1].Text := account;
+  self.Refresh;
+
+  //sqlSelect := 'select a.home_city,a.user_id itv_user_id,a.user_name itv_account,b.user_id,b.msisdn,b.customer_id,b.imsi from itv_users a,users b where a.user_name=:vAccount and a.payment_user_id=b.user_id';
+  oraQry.SQL.Clear;
+  oraQry.SQL.Add('select a.home_city,a.user_id itv_user_id,a.user_name itv_account,b.user_id,b.msisdn,b.customer_id,b.imsi');
+  oraQry.SQL.Add(', '''' MTV_ACCOUNT, '''' MTV_USER_ID, d.user_name BROADBAND_ACCOUNT, d.user_id BROADBAND_USER_ID, c.USER_ID AGGREGATION_UID');
+  oraQry.SQL.Add('from itv_users a,users b,user_aggregation c, broadband_users d ');
+  oraQry.SQL.Add(' where a.user_name=:vAccount and a.payment_user_id=b.user_id and b.user_id=c.payment_user_id(+) and a.broadband_user_id=d.user_id(+) ');
+  getBaseUserInfo(account);
+
+{  oraQry.ParamByName('vAccount').asString := account;
+  oraQry.Open;
+  i := 0;
+
+  while not oraQry.Eof do
+  begin
+    i:=i+1;
+    setLength(m_users.arrUserInfo,i);
+    userInfo := CUserInfo.Create;
+    userInfo.sKeyValues := TStringList.Create;
+    userInfo.sKeyType := TStringList.Create;
+    userInfo.nHomeCity := oraQry.FieldByName('home_city').asInteger;
+    userInfo.sMsisdn := oraQry.FieldByName('msisdn').asString;
+    userInfo.sMtvAccount := oraQry.FieldByName('mtv_account').AsString;
+    userInfo.sItvAccount := oraQry.FieldByName('itv_account').AsString;
+    userInfo.sBroadbandAccount := oraQry.FieldByName('broadband_account').AsString;
+
+
+    for j:=0 to m_KeyColumnName.count-1 do
+    begin
+      col := m_KeyColumnName.Objects[j] as CTableCol ;
+      userInfo.sKeyValues.Values[ m_KeyColumnName[j] ] := oraQry.FieldByName(col.colName).asString;
+      userInfo.sKeyType.Values[ m_KeyColumnName[j] ] := col.colTypeName +'('+inttostr(col.colLen)+')';
+    end;
+    m_users.arrUserInfo[i-1] := userInfo;
+    oraQry.Next;
+  end;
+  oraQry.Close;
+  m_users.nUserCnt := i;
+  if (i=0) then
+  begin
+    raise exception.Create(account+'用户/账号不存在');
+  end;
+}
+end;
+procedure TFormTestData.getBroadbandUserInfo();
+var
+  account : string;
+
+begin
+{根据输入的用户号码, 获取基本关键资料, home_city ,user_id, customer_id 等, 用于后续提取用户数据查询条件 }
+//  m_users := CUsers.Create;
+  account := lbedtMsisdn.Text;
+  statusbar1.Panels[1].Text := account;
+  self.Refresh;
+
+  //sqlSelect := 'select home_city,user_id,msisdn,customer_id,imsi from users where msisdn=:vMsisdn';
+  oraQry.SQL.Clear;
+  oraQry.SQL.Add('select a.home_city,a.user_id broadband_user_id,a.user_name broadband_account,b.user_id,b.msisdn,b.customer_id,b.imsi');
+  oraQry.SQL.Add(', '''' MTV_ACCOUNT, '''' MTV_USER_ID, '''' ITV_ACCOUNT, '''' ITV_USER_ID, c.USER_ID AGGREGATION_UID');
+  oraQry.SQL.Add('from broadband_users a,users b ,user_aggregation c where a.user_name=:vAccount and a.payment_user_id=b.user_id and b.user_id=c.payment_user_id(+)');
+  getBaseUserInfo(account);
+
+{
+  oraQry.ParamByName('vAccount').asString := account;
+  oraQry.Open;
+  i := 0;
+
+  while not oraQry.Eof do
+  begin
+    i:=i+1;
+    setLength(m_users.arrUserInfo,i);
+    userInfo := CUserInfo.Create;
+    userInfo.sKeyValues := TStringList.Create;
+    userInfo.sKeyType := TStringList.Create;
+    userInfo.nHomeCity := oraQry.FieldByName('home_city').asInteger;
+    userInfo.sMsisdn := oraQry.FieldByName('msisdn').asString;
+    userInfo.sMtvAccount := oraQry.FieldByName('mtv_account').AsString;
+    userInfo.sItvAccount := oraQry.FieldByName('itv_account').AsString;
+    userInfo.sBroadbandAccount := oraQry.FieldByName('broadband_account').AsString;
+
+    for j:=0 to m_KeyColumnName.count-1 do
+    begin
+      col := m_KeyColumnName.Objects[j] as CTableCol ;
+      userInfo.sKeyValues.Values[ m_KeyColumnName[j] ] := oraQry.FieldByName(col.colName).asString;
+      userInfo.sKeyType.Values[ m_KeyColumnName[j] ] := col.colTypeName +'('+inttostr(col.colLen)+')';
+    end;
+    m_users.arrUserInfo[i-1] := userInfo;
+    oraQry.Next;
+  end;
+  oraQry.Close;
+  m_users.nUserCnt := i;
+  if (i=0) then
+  begin
+    raise exception.Create(account+'用户不存在');
+  end;
+}
 end;
 
 function TFormTestData.buildSQL(userInfo:CUserInfo; tab: CUserTable):string;
@@ -429,7 +686,7 @@ var
   sqlDelete : string;
   sqlSelect : string;
   value, newVal, strValue : string;
-  i,cnt : integer;
+  i : integer;
   outstr : string;
   insField, insValue : string;
 
@@ -449,7 +706,7 @@ begin
 
   sqlSelect := 'SELECT @vFIELDS FROM @vTABLE_NAME WHERE @vSELECT_WHERE';
   sqlDelete := 'DELETE FROM @vTABLE_NAME WHERE @vDELETE_WHERE;';
-  sqlInsert := 'in_@vTABLE_NAME ( @vVALUES );';
+  sqlInsert := 'in_@vPROC_NAME ( @vVALUES );';
 
   sqlSelect := stringReplace(sqlSelect,'@vTABLE_NAME',tab.sTableName,[rfReplaceAll]);
   sqlSelect := stringReplace(sqlSelect,'@vFIELDS',tab.sGetFieldsStr,[rfReplaceAll]);
@@ -458,13 +715,13 @@ begin
   sqlDelete := stringReplace(sqlDelete,'@vTABLE_NAME',tab.sTableName,[rfReplaceAll]);
   sqlDelete := stringReplace(sqlDelete,'@vDELETE_WHERE',tab.sDelCondition,[rfReplaceAll]);
 
-  sqlInsert := stringReplace(sqlInsert,'@vTABLE_NAME',stringReplace(tab.sTableName, '_','',[rfReplaceAll]),[rfReplaceAll]);
+  sqlInsert := stringReplace(sqlInsert,'@vPROC_NAME',tab.sProcName,[rfReplaceAll]);
   //sqlInsert := stringReplace(sqlInsert,'@vFIELDS',insField+','+tab.sInsFieldsStr,[rfReplaceAll]);
 
   outstr := sqlDelete+#13#10;
 
   oraQry.SQL.clear;
-  oraQry.SQL.SetText(pchar(sqlSelect));
+  oraQry.SQL.Add(sqlSelect);
 
   //设置参数
   for i :=0 to tab.sKeyColumns.Count -1 do
@@ -473,7 +730,7 @@ begin
     oraQry.ParamByName(value).AsString := userInfo.sKeyValues.Values[value];
   end;
 
-  cnt := 0 ;
+//  cnt := 0 ;
   oraQry.Open;
   while not oraQry.Eof do
   begin
@@ -518,10 +775,34 @@ begin
 
   result := outstr;
 end;
+procedure TFormTestData.setTableSeq(var table : CUserTable);
+var
+  n,i,cnt : integer;
+begin
+  cnt := 1;
+  n := m_tables.IndexOf(table.sTableName);
+  if n>=0 then
+  begin
+    for i:=n to m_tables.Count-1 do
+    begin
+      if( m_tables[i] = table.sTableName ) then
+      begin
+        cnt := cnt + 1;
+      end;
+    end;
+  end;
+  table.nTabSeq := cnt;
+  table.sProcName:=stringReplace(table.sTableName, '_','',[rfReplaceAll]);
+  if cnt>1 then
+  begin
+    table.sProcName:=table.sProcName + inttostr(cnt);
+  end;
+end;
+
 procedure TFormTestData.prepareTargetTables();
 var
   table : CUserTable;
-  strList : TStringList;
+  strList, comment : TStringList;
   str : string;
   j,i : integer;
 begin
@@ -532,7 +813,14 @@ begin
     begin
       str := trim(memoTables.Lines[j]);
       if str='' then continue;
-      if copy(str,1,1)='#' then continue;
+      if copy(str,1,1)='#' then
+      begin
+        //保留备注并输出
+        comment := TStringList.Create;
+        comment.Add(str);
+        m_tables.AddObject('#',comment as TObject);
+        continue;
+      end;
 
       table := CUserTable.Create;
       strList := split(str,':');
@@ -557,6 +845,8 @@ begin
       str := stringReplace(str,'@ and','',[rfReplaceAll]);
       table.sGetCondition := str;
       table.sDelCondition := stringReplace(str,':','',[rfReplaceAll]);
+      //table.nTabSeq := 0;
+      setTableSeq(table);
       try
         //取表结构
         getTableInfo(table);
@@ -569,22 +859,23 @@ begin
 end;
 
 procedure TFormTestData.bbtExportClick(Sender: TObject);
-var
-  msisdn : string;
 begin
 {导出用户初始化数据SQL的入口}
+
   memoExport.Lines.Clear;
   bbtExport.Enabled := false;
   try
     statusbar1.Panels[0].Text := '表结构分析';
     self.Refresh;
     prepareTargetTables(); //待导出表准备
+
     statusbar1.Panels[0].Text := '取用户信息';
     self.Refresh;
     getUserInfo();   //取用户基本信息
+
     statusbar1.Panels[0].Text := '生成SQL';
     self.Refresh;
-    exportSql(); //生成导出SQL
+    exportSQL(); //生成导出SQL
   finally
   bbtExport.Enabled := true;
   end;
@@ -595,20 +886,33 @@ var
   userInfo : CUserInfo;
   tab : CUserTable;
   i,j : integer;
-  value, strValue , strFunc: string;
+  value, strValue : string;
+  vName,vType,vValue : string;
+  comment : TStringList;
 begin
   {生成SQL}
+  memoExport.Clear;
   for i := 0 to m_users.nUserCnt-1 do
   begin
-    memoExport.Clear;
-
+    if i>0 then memoExport.Lines.Add('----------------------跨用户数据分割线---------------------'+#13#10);
     userInfo := m_users.arrUserInfo[i];
     value:='';
-
+    strValue := '';
     for j :=0 to userInfo.sKeyValues.Count -1 do
     begin
+     vName := userInfo.sKeyValues.names[j];
+     vType := userInfo.sKeyType.Values[userInfo.sKeyValues.names[j]];
+     vValue := userInfo.sKeyValues.Values[userInfo.sKeyValues.names[j]];
+     value := value + '  '+vName+' '+vType+';'+#13#10;
+     if pos('VARCHAR',vType)>0 then
+     begin
+       vValue := '''' + vValue + '''';
+     end;
+     strValue := strValue + '  '+vName + ' := '+vValue+';'+#13#10;
+     {
      value := value + '  '+userInfo.sKeyValues.names[j]+' '+userInfo.sKeyType.Values[userInfo.sKeyValues.names[j]]+';'+#13#10;
      strValue := strValue + '  '+userInfo.sKeyValues.names[j] + ' := '+userInfo.sKeyValues.Values[userInfo.sKeyValues.names[j]]+';'+#13#10;
+     }
     end;
     memoExport.Lines.Add('DECLARE');
     memoExport.Lines.Add(value);  //变量声明
@@ -618,15 +922,23 @@ begin
     for j :=0 to m_tables.Count-1 do
     begin
       //构造导出语句
+      if m_tables[j]='#' then continue;
       tab := m_tables.objects[j] as CUserTable;
       memoExport.Lines.Add ('  '+tab.sInsertFunc);
       memoExport.Refresh;
     end;
     memoExport.Lines.Add('BEGIN');
     memoExport.Lines.Add(strValue); // 变量赋值
+//    memoExport.Lines.Add('-------------------------------------');
     for j :=0 to m_tables.Count-1 do
     begin
       //构造导出语句
+      if m_tables[j]='#' then
+      begin
+        comment := m_tables.Objects[j] as TStringList;
+        memoExport.Lines.Add('--' + comment.Strings[0]);
+        continue;
+      end;
       tab := m_tables.objects[j] as CUserTable;
       statusbar1.Panels[1].Text := '数据 '+ tab.sTableName;
       self.Refresh;
@@ -643,7 +955,6 @@ end;
 procedure TFormTestData.FormClose(Sender: TObject;
   var Action: TCloseAction);
 var
-  i : integer;
   iniFile,str : string;
   myinifile : TiniFile;
 begin
@@ -651,11 +962,23 @@ begin
     if oraConn.Connected then oraConn.Close;
   except
   end;
+
+  iniFile := copy(Application.ExeName,1,length(Application.ExeName)-4) +'.ini';
+  myinifile:=Tinifile.create(iniFile);
   try
-    iniFile := copy(Application.ExeName,1,length(Application.ExeName)-4) +'.ini';
-    myinifile:=Tinifile.create(iniFile);
+    //数据库连接串
     str := StringReplace(cb_tns_name.Items.Text,#13#10,';',[rfReplaceAll]);
     myIniFile.WriteString('TEST_DATA','TNS',str);
+
+    //脚本文件
+    str := m_sqlFile;
+    myIniFile.WriteString('TEST_DATA','SQL_FILE',str);
+    //账号类型
+    str := inttostr(cbAccountType.ItemIndex);
+    myIniFile.WriteString('TEST_DATA','ACCOUNT_TYPE',str);
+    //账号
+    myIniFile.WriteString('TEST_DATA','ACCOUNT',lbedtMsisdn.Text);
+
   finally
     myIniFile.Free;
   end;
@@ -684,14 +1007,11 @@ begin
         TMemo(sender).SelectAll;
 
 end;
-
-procedure TFormTestData.FormShow(Sender: TObject);
+procedure TFormTestData.initVar();
 var
   col : CTableCol;
-  iniFile,str : string;
-  myIniFile : TIniFile;
-  stm : TStringStream;
 begin
+//初始化内部参数变量
   if m_KeyColumnName=nil then
     m_KeyColumnName := TStringList.Create;
   //设置内部参数变量名
@@ -732,8 +1052,66 @@ begin
   col.colLen := 15;
   m_KeyColumnName.AddObject('vImsi',col);
 
-  m_KeyColumnName.Sort;
+  col := CTableCol.Create;
+  col.colName := 'MTV_ACCOUNT';
+  col.colType := ORA_VARCHAR2;
+  col.colTypeName := 'VARCHAR2';
+  col.colLen := 15;
+  m_KeyColumnName.AddObject('vMtvAcct',col);
 
+  col := CTableCol.Create;
+  col.colName := 'MTV_USER_ID';
+  col.colType := ORA_NUMBER;
+  col.colTypeName := 'NUMBER';
+  col.colLen := 15;
+  m_KeyColumnName.AddObject('vMtvUid',col);
+
+  col := CTableCol.Create;
+  col.colName := 'ITV_ACCOUNT';
+  col.colType := ORA_VARCHAR2;
+  col.colTypeName := 'VARCHAR2';
+  col.colLen := 32;
+  m_KeyColumnName.AddObject('vItvAcct',col);
+
+  col := CTableCol.Create;
+  col.colName := 'ITV_USER_ID';
+  col.colType := ORA_NUMBER;
+  col.colTypeName := 'NUMBER';
+  col.colLen := 15;
+  m_KeyColumnName.AddObject('vItvUid',col);
+
+  col := CTableCol.Create;
+  col.colName := 'BROADBAND_ACCOUNT';
+  col.colType := ORA_VARCHAR2;
+  col.colTypeName := 'VARCHAR2';
+  col.colLen := 32;
+  m_KeyColumnName.AddObject('vBroadbandAcct',col);
+
+  col := CTableCol.Create;
+  col.colName := 'BROADBAND_USER_ID';
+  col.colType := ORA_NUMBER;
+  col.colTypeName := 'NUMBER';
+  col.colLen := 15;
+  m_KeyColumnName.AddObject('vBroadbandUid',col);
+
+  col := CTableCol.Create;
+  col.colName := 'AGGREGATION_UID';
+  col.colType := ORA_NUMBER;
+  col.colTypeName := 'NUMBER';
+  col.colLen := 15;
+  m_KeyColumnName.AddObject('vAggregationUid',col);
+
+  m_KeyColumnName.Sort;
+end;
+
+procedure TFormTestData.FormShow(Sender: TObject);
+var
+  iniFile,str : string;
+  myIniFile : TIniFile;
+  stm : TStringStream;
+begin
+
+  initVar(); //初始化内部变量
 
   //取数据库连接名
   iniFile := copy(Application.ExeName,1,length(Application.ExeName)-4) +'.ini';
@@ -748,6 +1126,21 @@ begin
     stm.FREE;
   end;
 
+  //加载最近使用的脚本
+  str := trim(myIniFile.ReadString('TEST_DATA','SQL_FILE',''));
+  if str<>'' then
+  begin
+    memoTables.Lines.LoadFromFile(str);
+    m_sqlFile:=str;
+    stextSqlFile.Caption := '用户表：' + ExtractFileName(m_sqlFile);
+    OpenDialog1.InitialDir := extractFilePath(m_sqlFile);
+  end;
+
+  //账号类型
+  cbAccountType.ItemIndex := myIniFile.ReadInteger('TEST_DATA','ACCOUNT_TYPE',0);
+  //账号
+  lbedtMsisdn.Text := myIniFile.ReadString('TEST_DATA','ACCOUNT','13809567226');
+
 end;
 
 procedure TFormTestData.BitBtn1Click(Sender: TObject);
@@ -755,6 +1148,56 @@ begin
   MemoExport.SelectAll;
   MemoExport.CopyToClipboard;
 
+end;
+
+procedure TFormTestData.BitBtn3Click(Sender: TObject);
+begin
+    if m_sqlFile<>'' then
+    begin
+      //OpenDialog1.InitialDir := ExtractFilePath(m_sqlFile);
+      OpenDialog1.FileName := m_sqlFile;
+    end;
+    if OpenDialog1.Execute then
+    begin
+      m_sqlFile := OpenDialog1.FileName;
+
+      memoTables.Lines.LoadFromFile(m_sqlFile);
+      sTextSqlFile.Caption := '用户表：' + ExtractFileName(m_sqlFile);
+    end;
+
+end;
+
+procedure TFormTestData.BitBtn2Click(Sender: TObject);
+begin
+    if m_sqlFile<>'' then
+    begin
+      //saveDialog1.InitialDir := ExtractFilePath(m_sqlFile);
+      SaveDialog1.FileName := m_sqlFile;
+    end;
+
+    if SaveDialog1.Execute then
+    begin
+      m_sqlFile := SaveDialog1.FileName;
+
+      memoTables.Lines.SaveToFile(m_sqlFile);
+      sTextSqlFile.Caption := '用户表：' + ExtractFileName(m_sqlFile);
+    end;
+
+end;
+
+procedure TFormTestData.FormCreate(Sender: TObject);
+begin
+  FormTestDataDesc := TFormTestDataDesc.Create(nil);
+end;
+
+procedure TFormTestData.SpeedButton1Click(Sender: TObject);
+begin
+  FormTestDataDesc.Show();
+end;
+
+procedure TFormTestData.FormDestroy(Sender: TObject);
+begin
+  FormTestDataDesc.Free;
 end;
 
 initialization

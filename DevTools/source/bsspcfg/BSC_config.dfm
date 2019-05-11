@@ -23,7 +23,7 @@ object FormBsspCfgMain: TFormBsspCfgMain
     Top = 0
     Width = 878
     Height = 488
-    ActivePage = TabSheet3
+    ActivePage = TabSheet2
     Align = alClient
     TabOrder = 0
     object TabSheet1: TTabSheet

@@ -1,6 +1,6 @@
 object FormDevToolsMain: TFormDevToolsMain
-  Left = 275
-  Top = 247
+  Left = 390
+  Top = 215
   Width = 935
   Height = 589
   Caption = #32508#21512#24320#21457#37197#32622#24037#20855

@@ -304,6 +304,7 @@ begin
     clboxPortal.SetFocus;
     raise exception.Create('门户必须选择');
   end;
+  //识别门户分类
   for i:=0 to itemList.count-1 do
   begin
      if strIn(itemList[i],uigList) then   //接口门户
@@ -321,7 +322,7 @@ begin
       iop := true;
       str := str+'addIopPortal('+itemList[i]+');' +#13#10;
      end
-     else //bop门户
+     else //bop门户 是缺省的
      begin
       bop := true;
       str := str+'addBopPortal('+itemList[i]+');' +#13#10;
