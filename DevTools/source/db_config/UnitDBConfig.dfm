@@ -67,7 +67,7 @@ object DbConfig: TDbConfig
           Left = 805
           Top = 30
           Width = 149
-          Height = 21
+          Height = 24
           ImeName = #20013#25991' - QQ'#20116#31508#36755#20837#27861
           PasswordChar = '*'
           TabOrder = 2
@@ -101,7 +101,7 @@ object DbConfig: TDbConfig
           Left = 513
           Top = 30
           Width = 149
-          Height = 21
+          Height = 24
           ImeName = #20013#25991' - QQ'#20116#31508#36755#20837#27861
           TabOrder = 1
         end
@@ -226,7 +226,7 @@ object DbConfig: TDbConfig
             Left = 1
             Top = 110
             Width = 307
-            Height = 95
+            Height = 258
             Hint = 'select [field] from [table] group by [field] having on .....; '
             Align = alClient
             Font.Charset = ANSI_CHARSET
@@ -282,7 +282,7 @@ object DbConfig: TDbConfig
               Left = 176
               Top = 34
               Width = 100
-              Height = 21
+              Height = 24
               ImeName = #20013#25991' - QQ'#20116#31508#36755#20837#27861
               TabOrder = 2
               Text = '0'
@@ -291,7 +291,7 @@ object DbConfig: TDbConfig
               Left = 276
               Top = 34
               Width = 19
-              Height = 26
+              Height = 24
               Associate = edtNumber
               TabOrder = 3
             end
@@ -390,7 +390,7 @@ object DbConfig: TDbConfig
             Left = 30
             Top = 32
             Width = 409
-            Height = 21
+            Height = 24
             ImeName = #20013#25991' - QQ'#20116#31508#36755#20837#27861
             TabOrder = 0
           end
@@ -398,7 +398,7 @@ object DbConfig: TDbConfig
             Left = 30
             Top = 95
             Width = 409
-            Height = 21
+            Height = 24
             ImeName = #20013#25991' - QQ'#20116#31508#36755#20837#27861
             TabOrder = 1
           end
@@ -434,7 +434,7 @@ object DbConfig: TDbConfig
               Left = 110
               Top = 17
               Width = 281
-              Height = 21
+              Height = 24
               ImeName = #20013#25991' - QQ'#20116#31508#36755#20837#27861
               TabOrder = 0
             end
@@ -442,7 +442,7 @@ object DbConfig: TDbConfig
               Left = 90
               Top = 52
               Width = 301
-              Height = 21
+              Height = 24
               ImeName = #20013#25991' - QQ'#20116#31508#36755#20837#27861
               TabOrder = 1
             end
@@ -450,7 +450,7 @@ object DbConfig: TDbConfig
               Left = 129
               Top = 86
               Width = 262
-              Height = 21
+              Height = 24
               ImeName = #20013#25991' - QQ'#20116#31508#36755#20837#27861
               TabOrder = 2
             end
@@ -560,7 +560,7 @@ object DbConfig: TDbConfig
         Left = 117
         Top = 9
         Width = 257
-        Height = 21
+        Height = 24
         Hint = #36755#20837#34920#21517#21518#25353#22238#36710#38190
         ImeName = #20013#25991' - QQ'#20116#31508#36755#20837#27861
         ParentShowHint = False

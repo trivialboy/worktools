@@ -221,7 +221,6 @@ begin
     resp := TStringStream.Create('GBK'); //TStringStream.Create('GB18030');
     try
         http := TIdHTTP.Create(nil);
-
         http.HTTPOptions := [];
         http.Request.ContentLength := 0;
         http.Request.UserAgent :='Mozilla/3.0 (compatible; Indy Library; DevTools ' + getVer() + ')';

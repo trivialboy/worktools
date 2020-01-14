@@ -324,7 +324,7 @@ var
     pr_template,tmpstr : string;
     i,max_tmpl : integer;
 begin
-    max_tmpl := 32767;
+    max_tmpl := 32000;
 
     cbPreFixClick(nil);
 
@@ -440,7 +440,7 @@ begin
             begin
     			str1 := 'DECLARE'+#13#10
 	    			+'  LOB 	CLOB;'+#13#10
-		    		+'  LOBVARCHAR	VARCHAR2('+inttostr(max_tmpl)+');'+#13#10
+		    		+'  LOBVARCHAR	VARCHAR2('+inttostr(max_tmpl+100)+');'+#13#10
 			    	+'  LOBLENGTH	BINARY_INTEGER;'+#13#10
 				    +'  POS 		BINARY_INTEGER;'+#13#10
     				+'  QUERY_STRING 	VARCHAR2(1000);'+#13#10

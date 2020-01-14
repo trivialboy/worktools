@@ -1013,7 +1013,9 @@ begin
     end;
     //clbFields.Items.Clear;
     OraQuery.SQL.Clear;
-    strSql := 'select column_name from user_tab_columns where table_name=upper(''' +  strTable
+    //strSql := 'select column_name from user_tab_columns where table_name=upper(''' +  strTable
+    //            + ''') order by column_name';
+    strSql := 'select column_name from user_tab_cols where table_name=upper(''' +  strTable
                 + ''') order by column_name';
     OraQuery.SQL.Add(strSql);
     OraQuery.Open;

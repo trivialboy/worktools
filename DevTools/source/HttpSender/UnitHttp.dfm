@@ -1,5 +1,5 @@
 object FormHttpSender: TFormHttpSender
-  Left = 148
+  Left = 140
   Top = 117
   Width = 1199
   Height = 689

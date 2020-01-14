@@ -1,6 +1,6 @@
 object FormDevToolsMain: TFormDevToolsMain
-  Left = 390
-  Top = 215
+  Left = 368
+  Top = 213
   Width = 935
   Height = 589
   Caption = #32508#21512#24320#21457#37197#32622#24037#20855
@@ -129,7 +129,7 @@ object FormDevToolsMain: TFormDevToolsMain
     Top = 64
   end
   object Timer1: TTimer
-    Interval = 3000
+    Interval = 5000
     OnTimer = Timer1Timer
     Left = 760
     Top = 64

@@ -404,7 +404,9 @@ type
     m_prefix_user :string;
 
     m_procGroupList : TStringList;
-
+    m_bsspUser : TStringList;
+    m_bsspPass : TStringList;
+    m_bsspTns  : TStringList;
     procedure setSqlInParamDefault(arow : integer);
     procedure setSequence(sg : TStringGrid );
     procedure setSqlOutParamDefault(arow : integer);
@@ -737,12 +739,12 @@ var
     max_tmpl, i:integer;
 begin
     sPrefix := m_prefix_user;
-    max_tmpl := 32767;
+    max_tmpl := 32000;
             str1 := '--过程模板定义'+#13#10+'DECLARE'
                     +chr(13)+chr(10)
                     +'  LOB 	CLOB;'
                     +chr(13)+chr(10)
-                    +'  LOBVARCHAR	VARCHAR2('+inttostr(max_tmpl)+');'
+                    +'  LOBVARCHAR	VARCHAR2('+inttostr(max_tmpl+100)+');'
                     +chr(13)+chr(10)
                     +'  LOBLENGTH	BINARY_INTEGER;'
                     +chr(13)+chr(10)
@@ -1036,8 +1038,10 @@ end;
 
 procedure TFormBsspCfgMain.FormShow(Sender: TObject);
 var
-    iniFile : string;
+    iniFile , user,passwd,tns,s: string;
     myinifile : TIniFile;
+    i : integer;
+    sp : TStringList;
 begin
 //    g_sVersion := label_version.caption;
     {
@@ -1166,37 +1170,61 @@ begin
     end;
 
     //取数据库连接名
+    {
     iniFile := copy(Application.ExeName,1,length(Application.ExeName)-4) +'.tns2';
     if ( FileExists(iniFile) ) then
     begin
         cb_tns_name.Items.LoadFromFile(iniFile);
         cb_tns_name.ItemIndex := 0;
     end;
+    }
 
-    //取测试服务地址
-    {
-    iniFile := copy(Application.ExeName,1,length(Application.ExeName)-4) +'.http';
-    if ( FileExists(iniFile) ) then
+    iniFile := copy(Application.ExeName,1,length(Application.ExeName)-4) +'.ini';
+    myinifile:=Tinifile.create(iniFile);
+
+    i:=1;
+    while true do
     begin
-        cb_http.Items.LoadFromFile(iniFile);
-        cb_http.ItemIndex := 0;
+       s:= myIniFile.ReadString('BSSP_CONFIG','SVR'+inttostr(i),'');
+       if s='' then break;
+       sp := split(s,'@');
+       tns := sp.Strings[1];
+       s := sp.Strings[0];
+       sp.Free;
+       sp := split(s,'/');
+       user := sp.Strings[0];
+       passwd := sp.Strings[1];
+       sp.Free;
+       
+       m_bsspUser.Add(user);
+       m_bsspPass.Add(passwd);
+       m_bsspTns.add(tns);
+
+
+       i := i + 1;
     end;
-    }
-    //取bssp admin server服务地址
-    {
-    iniFile := copy(Application.ExeName,1,length(Application.ExeName)-4) +'.svr';
-    if ( FileExists(iniFile) ) then
+    
+    if m_bsspTns.Count=0 then
     begin
-        cb_server.Items.LoadFromFile(iniFile);
-        cb_server.ItemIndex := 0;
+      //默认值填充
+      m_bsspUser.Add('bssp');
+      m_bsspPass.Add('W%kdky#l$0');
+      m_bsspTns.Add('10.1.0.211:1521:kf');
+
+      m_bsspUser.Add('bssp');
+      m_bsspPass.Add('bssp');
+      m_bsspTns.Add('10.46.158.133:1521:wjjs1');
     end;
-    }
+
+    cb_tns_name.Clear;
+    cb_tns_name.Items.Text := m_bsspTns.Text;
+    cb_tns_name.ItemIndex := 0;
+    leddbuser.Text := m_bsspUser.Strings[0];
+    leddbpass.Text := m_bsspPass.Strings[0];
 
     // 取bssp machine id
-      iniFile := copy(Application.ExeName,1,length(Application.ExeName)-4) +'.ini';
-      myinifile:=Tinifile.create(iniFile);
     ed_machine.Text := myIniFile.ReadString('BSSP_CONFIG','MACHINE_ID','');
-      myIniFile.Free;
+    myIniFile.Free;
 
     cb_prefixClick(nil);
 end;
@@ -1782,11 +1810,10 @@ end;
 
 procedure TFormBsspCfgMain.FormClose(Sender: TObject; var Action: TCloseAction);
 var
-    iniFile : string;
+  iniFile,s : string;
   myinifile : TiniFile;
+  i : integer;
 begin
-
-
 //    if idUdpSvr.Active then idUdpSvr.Active := false;
     try
     if AdoConn.Connected then
@@ -1798,9 +1825,6 @@ begin
     iniFile := copy(Application.ExeName,1,length(Application.ExeName)-4) +'.link';
     cbCallName.Items.SaveToFile(iniFile);
 
-    //保存数据库连接名
-    iniFile := copy(Application.ExeName,1,length(Application.ExeName)-4) +'.tns2';
-    cb_tns_name.Items.SaveToFile(iniFile);
 
     //保存测试服务地址
     {
@@ -1816,7 +1840,24 @@ begin
       iniFile := copy(Application.ExeName,1,length(Application.ExeName)-4) +'.ini';
       myinifile:=Tinifile.create(iniFile);
       myIniFile.WriteString('BSSP_CONFIG','MACHINE_ID',ED_MACHINE.Text);
+
+
+      //保存数据库连接名
+      iniFile := copy(Application.ExeName,1,length(Application.ExeName)-4) +'.tns2';
+      cb_tns_name.Items.SaveToFile(iniFile);
+
+      for i:=0 to m_bsspUser.Count-1 do
+      begin
+        s := m_bsspUser.Strings[i] + '/' + m_bsspPass.Strings[i] + '@' + m_bsspTns.strings[i];
+        myIniFile.WriteString('BSSP_CONFIG','SVR'+inttostr(i+1),s);
+      end;
       myIniFile.Free;
+
+      m_bsspUser.Free;
+      m_bsspPass.Free;
+      m_bsspTns.Free;
+
+      m_procGroupList.Free;
 
     action := caFree;
 end;
@@ -2580,8 +2621,8 @@ end;
 
 procedure TFormBsspCfgMain.CB_TNS_NAMEChange(Sender: TObject);
 begin
-    //cb_user.ItemIndex := cb_tns_name.ItemIndex;
-    //cb_passwd.ItemIndex := cb_tns_name.ItemIndex;
+    ledDbUser.Text := m_bsspUser.Strings[cb_tns_name.ItemIndex];
+    ledDbPass.Text := m_bsspPass.Strings[cb_tns_name.ItemIndex];
 end;
 
 procedure TFormBsspCfgMain.enableDBbtn();
@@ -2802,6 +2843,9 @@ begin
   m_procGroupList.Add('302000');   // 受理类
   m_procGroupList.Add('303000');   // 管理类
 
+  m_bsspUser := TStringList.create();
+  m_bsspPass := TStringList.Create();
+  m_bsspTns  := TStringList.Create();
 
   {
   sfdl_transaction := Tsfdl_transaction.Create(self);
